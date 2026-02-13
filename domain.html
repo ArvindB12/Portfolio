@@ -79,7 +79,7 @@
         .pathway-title { font-family: 'Caveat', cursive; font-size: 2rem; color: var(--accent-dark); margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; }
         .pathway-desc { font-size: 1.1rem; color: var(--text-muted); }
 
-        /* --- THE TRANSITION ENGINE (INTERACTIVE TOOL) --- */
+        /* --- THE TRANSITION ENGINE --- */
         .interactive-tool { background: var(--surface-color); padding: 40px; border-radius: 16px; border: 2px dashed var(--accent-dark); box-shadow: var(--shadow); margin-top: 40px; }
         .tool-header { text-align: center; margin-bottom: 30px; }
         .tool-label { font-weight: 700; font-size: 1.3rem; color: var(--accent-dark); margin-bottom: 15px; display: block; text-align: center; }
@@ -100,12 +100,12 @@
         .result-section { margin-bottom: 25px; }
         .result-title { font-family: 'Caveat', cursive; font-size: 1.8rem; color: var(--accent-dark); margin-bottom: 5px; }
         .result-text { font-size: 1.15rem; color: var(--text-main); line-height: 1.5; }
-        
         .resource-tag { display: inline-block; background: var(--surface-color); border: 1px solid var(--border-color); padding: 5px 15px; border-radius: 20px; font-weight: 700; font-size: 1rem; margin-right: 10px; margin-top: 10px; color: var(--accent-dark); }
 
+        /* Animation Fixes to Prevent Blank Screens */
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Animation */
+        
+        .hero-animate { animation: slideUp 0.8s ease forwards; }
         .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -132,7 +132,7 @@
         <a href="index.html" class="menu-link">1. The Journal (Home)</a>
         <a href="index.html#method" class="menu-link">2. Method & Mind</a>
         <a href="case-studies.html" class="menu-link">3. Case Files (Archive)</a>
-        <a href="#" class="menu-link" onclick="toggleMenu()">4. BeSci Domain & Careers</a>
+        <a href="domain.html" class="menu-link">4. BeSci Domain & Careers</a>
         <a href="mailto:arvindbaskar02@gmail.com" class="menu-link">5. Contact Me</a>
         <button class="theme-toggle-sm" onclick="toggleTheme()" id="themeBtn">Switch to Dark Mode</button>
         <div style="margin-top: 30px; font-size: 2rem; cursor: pointer;" onclick="toggleMenu()">✕ Close Menu</div>
@@ -140,8 +140,8 @@
 
     <div class="container">
         
-        <h1 class="hero-title reveal">The Architecture of Choice.</h1>
-        <p class="hero-subtitle reveal">
+        <h1 class="hero-title hero-animate">The Architecture of Choice.</h1>
+        <p class="hero-subtitle hero-animate">
             Behavioral Science (BeSci) isn't just an academic theory; it is the applied science of human decision-making. Here is a look at the landscape, the policy impact in India, and how you can map your career into this domain.
         </p>
 
@@ -232,23 +232,26 @@
             document.getElementById('menuOverlay').classList.toggle('open');
         }
 
-        // --- SCROLL REVEAL ---
+        // --- SCROLL REVEAL (WITH FAILSAFE) ---
         document.addEventListener('DOMContentLoaded', () => {
             const reveals = document.querySelectorAll('.reveal');
+            
             const revealOnScroll = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
                     }
                 });
-            }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+            }, { threshold: 0.05, rootMargin: "0px 0px 50px 0px" });
 
             reveals.forEach(reveal => revealOnScroll.observe(reveal));
+            
+            // Failsafe: Automatically reveal the first 3 items so the screen is NEVER blank
             setTimeout(() => {
-                reveals.forEach(reveal => {
-                    if (reveal.getBoundingClientRect().top < window.innerHeight) reveal.classList.add('active');
-                });
-            }, 100);
+                for(let i=0; i<3; i++){
+                    if(reveals[i]) reveals[i].classList.add('active');
+                }
+            }, 200);
         });
 
         // --- TRANSITION ENGINE LOGIC ---
@@ -299,6 +302,4 @@
                     <h4 class="result-title">Your Secret Weapon</h4>
                     <p class="result-text">${data.advantage}</p>
                 </div>
-                <div class="result-section">
-                    <h4 class="result-title">How to Apply BeSci Today</h4>
-                    <p class="result-text"
+ 
