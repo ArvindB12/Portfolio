@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arvind B. | Behavioral Lab</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Kalam:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Palette */
+            --bg-color: #F6FEDB;
+            --surface-color: #E6D3A3;
+            --accent-light: #D8D174;
+            --accent-mid: #B6C454;
+            --accent-dark: #91972A;
+            --text-main: #2a2e1d;
+            --terminal-bg: #1e1e1e;
+            --terminal-text: #00ff41;
+            --border-color: rgba(145, 151, 42, 0.3);
+            --shadow: 0 10px 30px rgba(145, 151, 42, 0.2);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #161811;
+            --surface-color: #24271c;
+            --accent-light: #91972A;
+            --accent-mid: #B6C454;
+            --accent-dark: #D8D174;
+            --text-main: #F6FEDB;
+            --terminal-bg: #000000;
+            --terminal-text: #00ff41;
+            --border-color: rgba(246, 254, 219, 0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.4s, color 0.4s; }
+        body { font-family: 'Kalam', cursive; background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* Navigation */
+        nav { padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; }
+        .back-link { font-family: 'Caveat', cursive; font-size: 1.5rem; color: var(--accent-dark); text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .back-link:hover { transform: translateX(-5px); }
+
+        /* Container */
+        .lab-container { 
+            max-width: 1000px; margin: 0 auto; width: 100%; padding: 40px 5%; flex-grow: 1;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;
+        }
+
+        /* Titles */
+        .lab-header { grid-column: 1 / -1; text-align: center; margin-bottom: 20px; }
+        .lab-title { font-family: 'Caveat', cursive; font-size: 3.5rem; color: var(--accent-dark); line-height: 1; }
+        .lab-subtitle { font-size: 1.2rem; color: var(--text-main); opacity: 0.8; }
+
+        /* Control Panel (Left) */
+        .control-panel {
+            background: var(--surface-color); padding: 30px; border-radius: 16px; border: 2px solid var(--accent-dark);
+            box-shadow: var(--shadow); position: relative;
+        }
+        .panel-label { font-weight: 700; margin-bottom: 10px; display: block; color: var(--accent-dark); text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* Selectors */
+        .lab-select {
+            width: 100%; padding: 15px; border-radius: 8px; border: 1px solid var(--accent-dark);
+            background: var(--bg-color); font-family: 'Kalam', cursive; font-size: 1.1rem; color: var(--text-main);
+            margin-bottom: 25px; cursor: pointer; appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2391972A%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat; background-position: right 15px top 50%; background-size: 12px auto;
+        }
+
+        /* The Big Button */
+        .run-btn {
+            width: 100%; padding: 18px; border: none; border-radius: 50px;
+            background: var(--accent-dark); color: #fff; font-family: 'Caveat', cursive; font-size: 1.8rem;
+            cursor: pointer; box-shadow: 0 4px 0 var(--accent-mid); transform: translateY(0); transition: 0.1s;
+        }
+        .run-btn:active { transform: translateY(4px); box-shadow: 0 0 0 var(--accent-mid); }
+        .run-btn:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; }
+
+        /* AI Output (Right) */
+        .ai-terminal {
+            background: var(--terminal-bg); color: var(--terminal-text);
+            padding: 30px; border-radius: 12px; font-family: 'JetBrains Mono', monospace;
+            min-height: 400px; box-shadow: var(--shadow); border: 2px solid #333;
+            position: relative; overflow: hidden;
+        }
+        .ai-header { 
+            position: absolute; top: 0; left: 0; width: 100%; background: #333; color: #fff; 
+            padding: 5px 15px; font-size: 0.8rem; display: flex; gap: 5px;
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: #ff5f56; display: inline-block; }
+        .dot:nth-child(2) { background: #ffbd2e; }
+        .dot:nth-child(3) { background: #27c93f; }
+
+        .terminal-content { margin-top: 20px; font-size: 0.95rem; line-height: 1.6; white-space: pre-wrap; }
+        
+        .cursor { display: inline-block; width: 8px; height: 15px; background: var(--terminal-text); animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* The Solution Card (Pop-up) */
+        .solution-card {
+            background: #fff; color: #333; padding: 20px; border-radius: 8px; margin-top: 20px;
+            border-left: 5px solid var(--accent-dark); display: none;
+            animation: slideUp 0.5s ease-out; font-family: 'Kalam', cursive;
+        }
+        .sol-title { font-weight: 700; font-size: 1.2rem; color: var(--accent-dark); }
+        .sol-tag { background: #eee; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .lab-container { grid-template-columns: 1fr; }
+            .ai-terminal { min-height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="back-link">← Back to Journal</a>
+        <div style="font-weight: 700; color: var(--accent-dark);">Arvind's Lab</div>
+    </nav>
+
+    <div class="lab-container">
+        
+        <div class="lab-header">
+            <h1 class="lab-title">The Intervention Simulator</h1>
+            <p class="lab-subtitle">Select a context to see how I translate human behavior into systemic solutions.</p>
+        </div>
+
+        <div class="control-panel">
+            <label class="panel-label">1. Select Ecosystem</label>
+            <select id="contextSelect" class="lab-select" onchange="updateBarriers()">
+                <option value="" disabled selected>-- Choose Context --</option>
+                <option value="agriculture">Agriculture & Rural Development</option>
+                <option value="policy">Government Policy</option>
+                <option value="health">Urban Health & Nutrition</option>
+            </select>
+
+            <label class="panel-label">2. Identify Human Barrier</label>
+            <select id="barrierSelect" class="lab-select" disabled>
+                <option value="" disabled selected>-- Waiting for Context --</option>
+            </select>
+
+            <button class="run-btn" id="runBtn" onclick="runSimulation()" disabled>Run Behavioral Engine</button>
+            
+            <div style="position:absolute; top:-15px; left:40%; width:100px; height:30px; background:rgba(255,255,255,0.4); transform:rotate(-2deg); box-shadow:0 1px 2px rgba(0,0,0,0.1);"></div>
+        </div>
+
+        <div class="ai-terminal">
+            <div class="ai-header">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                <span style="margin-left: 10px;">behavioral_processor.exe</span>
+            </div>
+            <div id="terminalOutput" class="terminal-content">
+                System Ready...<br>Waiting for input parameters...<span class="cursor"></span>
+            </div>
+            
+            <div id="finalResult" class="solution-card">
+                </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- DATA MATRIX ---
+        const scenarios = {
+            agriculture: {
+                barriers: [
+                    { id: "herd", name: "Herd Behavior / Panic Selling", 
+                      solution: "KriShiKsha", 
+                      logic: "Farmers copy neighbors because future demand is invisible. By visualizing demand data (Green/Red signals), we create 'Informational Certainty', breaking the herd loop.",
+                      type: "Information Asymmetry" },
+                    { id: "loss", name: "Loss Aversion (Chemical Use)", 
+                      solution: "Integrated Pest Management (IPM)", 
+                      logic: "Farmers fear losing crops more than they value long-term soil health. The intervention must reframe organic methods as 'Risk Insurance' rather than 'New Tech'.",
+                      type: "Cognitive Dissonance" }
+                ]
+            },
+            policy: {
+                barriers: [
+                    { id: "friction", name: "High Friction / Cognitive Load", 
+                      solution: "Narrative Framing Project", 
+                      logic: "Policy documents are boring and complex. Humans ignore complexity. By wrapping policy in 'Socio-Cultural Narratives' (Stories), we bypass cognitive resistance.",
+                      type: "Engagement Gap" }
+                ]
+            },
+            health: {
+                barriers: [
+                    { id: "fatigue", name: "Decision Fatigue / Time Scarcity", 
+                      solution: "Cook2You", 
+                      logic: "After work, willpower is low. Ordering junk food is the 'Default Choice'. Cook2You removes the friction of cooking by providing a verified chef, making health the easier path.",
+                      type: "Default Bias" }
+                ]
+            }
+        };
+
+        // --- LOGIC ---
+        const contextSelect = document.getElementById('contextSelect');
+        const barrierSelect = document.getElementById('barrierSelect');
+        const runBtn = document.getElementById('runBtn');
+        const terminal = document.getElementById('terminalOutput');
+        const resultCard = document.getElementById('finalResult');
+
+        function updateBarriers() {
+            const context = contextSelect.value;
+            const barriers = scenarios[context].barriers;
+            
+            barrierSelect.innerHTML = '<option value="" disabled selected>-- Select Barrier --</option>';
+            barriers.forEach(b => {
+                const opt = document.createElement('option');
+                opt.value = b.id;
+                opt.innerText = b.name;
+                barrierSelect.appendChild(opt);
+            });
+            
+            barrierSelect.disabled = false;
+            runBtn.disabled = true;
+            resultCard.style.display = 'none';
+            terminal.innerHTML = 'Context Loaded: ' + context.toUpperCase() + '<br>Waiting for barrier identification...<span class="cursor"></span>';
+        }
+
+        barrierSelect.addEventListener('change', () => {
+            runBtn.disabled = false;
+        });
+
+        function runSimulation() {
+            const context = contextSelect.value;
+            const barrierId = barrierSelect.value;
+            const data = scenarios[context].barriers.find(b => b.id === barrierId);
+            
+            runBtn.disabled = true;
+            resultCard.style.display = 'none';
+            terminal.innerHTML = ""; // Clear
+            
+            // Simulation Sequence
+            const lines = [
+                `> Initializing Behavioral Analysis...`,
+                `> Context: ${context.toUpperCase()}`,
+                `> Identified Barrier: [${data.type}]`,
+                `> Analyzing Psychological Factors...`,
+                `> ... Human bias detected: ${data.name}`,
+                `> Applying Framework: Diagnosis -> Hypothesis -> Intervention`,
+                `> Synthesizing Solution...`,
+                `> COMPLETE.`
+            ];
+
+            let i = 0;
+            function typeLine() {
+                if (i < lines.length) {
+                    terminal.innerHTML += lines[i] + "<br>";
+                    i++;
+                    setTimeout(typeLine, 600); // Typing speed
+                } else {
+                    terminal.innerHTML += '<span class="cursor"></span>';
+                    showResult(data);
+                }
+            }
+            typeLine();
+        }
+
+        function showResult(data) {
+            setTimeout(() => {
+                resultCard.innerHTML = `
+                    <div style="font-size:0.8rem; text-transform:uppercase; color:#888; margin-bottom:5px;">Generated Intervention</div>
+                    <div class="sol-title">${data.solution}</div>
+                    <hr style="margin:10px 0; border:none; border-top:1px dashed #ccc;">
+                    <p style="font-family:'JetBrains Mono', monospace; font-size:0.9rem;">${data.logic}</p>
+                    <div style="margin-top:15px; text-align:right;">
+                        <span class="sol-tag">✅ Validated</span>
+                    </div>
+                `;
+                resultCard.style.display = 'block';
+                runBtn.disabled = false;
+            }, 500);
+        }
+    </script>
+</body>
+</html>
