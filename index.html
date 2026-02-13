@@ -11,152 +11,98 @@
 
     <style>
         :root {
-            /* Light Theme */
-            --bg-color: #F6FEDB;
-            --surface-color: #E6D3A3;
-            --accent-light: #D8D174;
-            --accent-mid: #B6C454;
-            --accent-dark: #91972A;
-            --text-main: #2a2e1d;
-            --text-muted: #545943;
-            --border-color: rgba(145, 151, 42, 0.3);
-            --shadow: 0 10px 30px rgba(145, 151, 42, 0.15);
-            --tape-color: rgba(255, 255, 255, 0.4);
+            --bg-color: #F6FEDB; --surface-color: #E6D3A3; --accent-light: #D8D174;
+            --accent-mid: #B6C454; --accent-dark: #91972A; --text-main: #2a2e1d;
+            --text-muted: #545943; --border-color: rgba(145, 151, 42, 0.3);
+            --shadow: 0 10px 30px rgba(145, 151, 42, 0.15); --tape-color: rgba(255, 255, 255, 0.4);
         }
 
         [data-theme="dark"] {
-            /* Dark Theme */
-            --bg-color: #161811;
-            --surface-color: #24271c;
-            --accent-light: #91972A;
-            --accent-mid: #B6C454;
-            --accent-dark: #D8D174;
-            --text-main: #F6FEDB;
-            --text-muted: #E6D3A3;
-            --border-color: rgba(246, 254, 219, 0.1);
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            --tape-color: rgba(255, 255, 255, 0.15);
+            --bg-color: #161811; --surface-color: #24271c; --accent-light: #91972A;
+            --accent-mid: #B6C454; --accent-dark: #D8D174; --text-main: #F6FEDB;
+            --text-muted: #E6D3A3; --border-color: rgba(246, 254, 219, 0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5); --tape-color: rgba(255, 255, 255, 0.15);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color 0.4s, color 0.4s; }
         body { font-family: 'Kalam', cursive; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
         h1, h2, h3, h4 { font-family: 'Caveat', cursive; font-weight: 700; line-height: 1.1; }
 
-        /* --- NAVIGATION --- */
+        /* Navigation */
         nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: linear-gradient(var(--bg-color) 80%, transparent); pointer-events: none; }
         .nav-content { pointer-events: auto; display: flex; align-items: center; gap: 20px; }
         .brand { pointer-events: auto; font-family: 'Caveat', cursive; font-size: 2rem; color: var(--accent-dark); text-decoration: none; font-weight: 700; }
-
-        /* Hamburger Menu Button */
-        .menu-btn {
-            background: var(--surface-color);
-            border: 2px solid var(--accent-dark);
-            width: 50px; height: 50px; border-radius: 50%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px;
-            cursor: pointer; box-shadow: 4px 4px 0 var(--accent-mid); pointer-events: auto;
-        }
+        .menu-btn { background: var(--surface-color); border: 2px solid var(--accent-dark); width: 50px; height: 50px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; cursor: pointer; box-shadow: 4px 4px 0 var(--accent-mid); pointer-events: auto; }
         .menu-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--accent-mid); }
         .bar { width: 24px; height: 2px; background: var(--text-main); border-radius: 2px; transition: 0.3s; }
 
-        /* --- MENU OVERLAY --- */
-        .menu-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-color);
-            z-index: 900;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none; transform: translateY(-20px);
-        }
+        /* Menu Overlay */
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 900; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transform: translateY(-20px); transition: 0.4s; }
         .menu-overlay.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        
-        .menu-link {
-            font-family: 'Caveat', cursive; font-size: 2.5rem; color: var(--text-main);
-            text-decoration: none; margin: 15px 0; opacity: 0; transform: translateY(20px); transition: 0.5s;
-        }
+        .menu-link { font-family: 'Caveat', cursive; font-size: 2.5rem; color: var(--text-main); text-decoration: none; margin: 15px 0; opacity: 0; transform: translateY(20px); transition: 0.5s; }
         .menu-overlay.open .menu-link { opacity: 1; transform: translateY(0); }
         .menu-overlay.open .menu-link:nth-child(1) { transition-delay: 0.1s; }
         .menu-overlay.open .menu-link:nth-child(2) { transition-delay: 0.15s; }
         .menu-overlay.open .menu-link:nth-child(3) { transition-delay: 0.2s; }
         .menu-overlay.open .menu-link:nth-child(4) { transition-delay: 0.25s; }
         .menu-overlay.open .menu-link:nth-child(5) { transition-delay: 0.3s; }
+        .theme-toggle-sm { margin-top: 30px; padding: 10px 20px; border-radius: 30px; border: 2px solid var(--accent-dark); background: transparent; color: var(--text-main); font-family: 'Kalam', cursive; font-weight: 700; cursor: pointer; }
 
-        /* Theme Toggle (Small) */
-        .theme-toggle-sm {
-            margin-top: 30px; padding: 10px 20px; border-radius: 30px; border: 2px solid var(--accent-dark);
-            background: transparent; color: var(--text-main); font-family: 'Kalam', cursive; font-weight: 700; cursor: pointer;
-        }
-
-        /* --- PAGE STRUCTURE --- */
-        .page-view {
-            display: none; opacity: 0;
-            padding-top: 100px; 
-            min-height: 100vh;
-        }
+        /* Page Structure */
+        .page-view { display: none; opacity: 0; padding-top: 100px; min-height: 100vh; transition: 0.4s; }
         .page-view.active { display: block; opacity: 1; }
-
-        /* --- SHARED COMPONENTS --- */
         .container { max-width: 1000px; margin: 0 auto; width: 100%; padding: 0 5%; }
         .section-title { font-size: 3rem; color: var(--accent-mid); margin-bottom: 40px; border-bottom: 2px dashed var(--border-color); padding-bottom: 10px; display: inline-block; }
         
+        /* Hero & Cards */
         .hero-wrapper { display: flex; align-items: center; gap: 60px; padding-top: 40px; margin-bottom: 80px;}
         .hero-text { flex: 1; }
         .hero-title { font-size: clamp(3.5rem, 6vw, 5.5rem); color: var(--accent-dark); margin-bottom: 20px; }
         .hero-subtitle { font-size: clamp(1.3rem, 2.5vw, 1.8rem); color: var(--text-muted); max-width: 700px; }
-
-        /* --- PHOTO STYLES --- */
-        .photo-container { 
-            flex-shrink: 0; position: relative; 
-            transform: rotate(-3deg); transition: transform 0.3s ease; 
-        }
+        .photo-container { flex-shrink: 0; position: relative; transform: rotate(-3deg); transition: transform 0.3s ease; }
         .photo-container:hover { transform: rotate(0deg) scale(1.02); }
-        
-        .photo-frame { 
-            width: 280px; height: 340px; 
-            background: #fff; 
-            padding: 15px 15px 60px 15px; 
-            box-shadow: var(--shadow); 
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
-        }
-
-        .photo-frame img { 
-            width: 100%; height: 100%; 
-            object-fit: cover; 
-            filter: sepia(10%); 
-            border: 1px solid #ddd;
-            display: block;
-        }
-
-        .photo-frame img:before {
-            content: "Arvind B.";
-            display: flex; align-items: center; justify-content: center;
-            width: 100%; height: 100%;
-            background: linear-gradient(135deg, #E6D3A3, #B6C454);
-            color: #fff; font-size: 2rem;
-            position: absolute; top: 0; left: 0;
-        }
-
+        .photo-frame { width: 280px; height: 340px; background: #fff; padding: 15px 15px 60px 15px; box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; filter: sepia(10%); border: 1px solid #ddd; display: block; }
         .tape { position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(2deg); width: 120px; height: 35px; background-color: var(--tape-color); backdrop-filter: blur(5px); box-shadow: 0 1px 3px rgba(0,0,0,0.1); z-index: 10; }
 
         .story-card { background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 40px; margin-bottom: 40px; box-shadow: var(--shadow); }
         .story-date { font-family: 'Caveat', cursive; font-size: 1.5rem; color: var(--accent-dark); margin-bottom: 10px; display: block; }
         .story-title { font-size: 2.2rem; margin-bottom: 15px; }
         .story-narrative { font-size: 1.25rem; color: var(--text-main); margin-bottom: 25px; }
-        
-        /* --- ACHIEVEMENT CARD SPECIFIC --- */
-        .achievement-card { 
-            background: var(--bg-color); 
-            border-left: 6px solid var(--accent-dark); 
-            padding: 30px; 
-            margin-bottom: 30px; 
-            border-radius: 0 12px 12px 0;
-            box-shadow: 2px 4px 10px rgba(0,0,0,0.05);
-        }
+        .skills-applied { background: var(--bg-color); border-left: 4px solid var(--accent-mid); padding: 20px; border-radius: 0 8px 8px 0; font-size: 1.1rem; color: var(--text-muted); }
+        .skills-applied span { font-weight: 700; color: var(--accent-dark); }
+
+        /* Achievements Card */
+        .achievement-card { background: var(--bg-color); border-left: 6px solid var(--accent-dark); padding: 30px; margin-bottom: 30px; border-radius: 0 12px 12px 0; box-shadow: 2px 4px 10px rgba(0,0,0,0.05); }
         .award-icon { font-size: 2rem; margin-right: 15px; vertical-align: middle; }
         .achievement-title { font-size: 1.8rem; color: var(--text-main); margin-bottom: 10px; display: inline-block; vertical-align: middle; }
         .achievement-desc { font-size: 1.15rem; color: var(--text-muted); text-align: justify; }
 
-        .skills-applied { background: var(--bg-color); border-left: 4px solid var(--accent-mid); padding: 20px; border-radius: 0 8px 8px 0; font-size: 1.1rem; color: var(--text-muted); }
-        .skills-applied span { font-weight: 700; color: var(--accent-dark); }
+        /* Method & Mind Grid */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }
+        .method-step { position: relative; padding-left: 40px; margin-bottom: 30px; }
+        .method-step::before { content: ''; position: absolute; left: 0; top: 10px; width: 20px; height: 20px; border: 2px solid var(--accent-dark); border-radius: 50%; background: var(--bg-color); }
+        .method-step::after { content: ''; position: absolute; left: 9px; top: 30px; width: 2px; height: 100%; background: var(--border-color); }
+        .method-step:last-child::after { display: none; }
+        .step-title { font-size: 1.5rem; font-weight: 700; color: var(--accent-dark); margin-bottom: 5px; }
+        .step-desc { font-size: 1.1rem; color: var(--text-muted); }
+
+        .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 20px; }
+        .tool-card { background: var(--bg-color); border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; text-align: center; box-shadow: 2px 2px 0 var(--border-color); }
+        .tool-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+        .tool-name { font-weight: 700; color: var(--text-main); }
+        .sticky-note { background: #fff7d1; color: #555; padding: 20px; font-family: 'Kalam', cursive; box-shadow: 2px 4px 6px rgba(0,0,0,0.1); transform: rotate(-2deg); margin-bottom: 20px; border-top: 10px solid rgba(0,0,0,0.05); }
+        .sticky-note:nth-child(even) { transform: rotate(2deg); background: #e0f7fa; }
+
+        /* THE NEXT CHAPTER BUTTON (THE SECRET SAUCE) */
+        .next-chapter-btn {
+            display: block; width: 100%; max-width: 450px; margin: 60px auto 100px auto; padding: 18px 30px;
+            background: var(--accent-dark); color: #F6FEDB; text-align: center; border-radius: 40px;
+            font-family: 'Caveat', cursive; font-size: 2.2rem; text-decoration: none; font-weight: 700;
+            box-shadow: 0 6px 0 var(--accent-mid); transition: all 0.1s;
+        }
+        .next-chapter-btn:active { transform: translateY(6px); box-shadow: 0 0 0 var(--accent-mid); }
+        .next-chapter-btn:hover { filter: brightness(1.1); color: #fff; }
 
         /* Animation Classes */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s; }
@@ -168,6 +114,7 @@
             .photo-frame { margin: 0 auto; width: 250px; height: 300px; }
             .hero-title { font-size: 3.5rem; }
             .achievement-card { padding: 20px; }
+            .next-chapter-btn { font-size: 1.8rem; width: 90%; }
         }
     </style>
 </head>
@@ -241,7 +188,7 @@
                         <h3 class="achievement-title">State Finalist – TN-EDII Startup Competition</h3>
                     </div>
                     <p class="achievement-desc">
-                        <em>Cook2You</em> was born out of a simple desire to help exhausted urban workers eat better by reducing the friction of meal prep. Being recognized as a state finalist by the Tamil Nadu Government and the Entrepreneurship Development and Innovation Institute (TN-EDII) was an incredibly humbling experience. It validated not just the business model, but our core behavioral hypothesis: when you make nutrition the path of least resistance, people will choose it. This platform taught me how large public institutions evaluate grassroots impact and scalability.
+                        <em>Cook2You</em> was born out of a simple desire to help exhausted urban workers eat better by reducing the friction of meal prep. Being recognized as a state finalist by the Tamil Nadu Government and the Entrepreneurship Development and Innovation Institute (TN-EDII) validated not just the business model, but our core behavioral hypothesis: when you make nutrition the path of least resistance, people will choose it. This platform taught me how large public institutions evaluate grassroots impact and scalability.
                     </p>
                 </div>
 
@@ -264,12 +211,10 @@
                         We had the privilege of presenting our model among some of the brightest technical minds in the country. Being highlighted here reinforced a profound lesson for me: the most advanced technology is useless if it ignores human psychology. It sharpened my approach to bridging tech and human behavior.
                     </p>
                 </div>
-
             </div>
             
-            <div style="text-align: center; margin-top: 50px; margin-bottom: 50px;">
-                <a href="case-studies.html" style="font-family: 'Caveat', cursive; font-size: 2rem; color: var(--accent-dark); text-decoration: none; border-bottom: 2px dashed var(--accent-dark);">Read Full Case Studies ➜</a>
-            </div>
+            <a href="#" onclick="navigate('method'); return false;" class="next-chapter-btn reveal">Next: See My Method & Mind ➜</a>
+
         </div>
     </div>
 
@@ -325,9 +270,7 @@
                 <div class="tool-card"><span class="tool-icon">🧠</span><div class="tool-name">Scale Creation</div><div style="font-size:0.8rem; color:var(--text-muted)">Assessment Tools</div></div>
             </div>
             
-            <div style="text-align: center; margin-top: 20px; margin-bottom: 80px;">
-                <a href="domain.html" style="font-family: 'Caveat', cursive; font-size: 2rem; color: var(--accent-dark); text-decoration: none; border-bottom: 2px dashed var(--accent-dark);">Explore BeSci Domain & Careers ➜</a>
-            </div>
+            <a href="case-studies.html" class="next-chapter-btn reveal">Next: Read The Case Files ➜</a>
             
         </div>
     </div>
@@ -336,19 +279,4 @@
         function toggleTheme() {
             const htmlEl = document.documentElement;
             const btn = document.getElementById('themeBtn');
-            if (htmlEl.getAttribute('data-theme') === 'light') {
-                htmlEl.setAttribute('data-theme', 'dark');
-                btn.innerText = 'Switch to Light Mode';
-            } else {
-                htmlEl.setAttribute('data-theme', 'light');
-                btn.innerText = 'Switch to Dark Mode';
-            }
-        }
-
-        function toggleMenu() {
-            document.getElementById('menuOverlay').classList.toggle('open');
-        }
-
-        function navigate(pageId) {
-            document.getElementById('menuOverlay').classList.remove('open');
-            document.querySelectorAll('.page-view').forEach(p => 
+            if (htmlEl.getAttribute('data-theme') === 'light
