@@ -102,12 +102,8 @@
         .result-text { font-size: 1.15rem; color: var(--text-main); line-height: 1.5; }
         .resource-tag { display: inline-block; background: var(--surface-color); border: 1px solid var(--border-color); padding: 5px 15px; border-radius: 20px; font-weight: 700; font-size: 1rem; margin-right: 10px; margin-top: 10px; color: var(--accent-dark); }
 
-        /* Animation Fixes to Prevent Blank Screens */
+        /* Simple load animation for result box */
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .hero-animate { animation: slideUp 0.8s ease forwards; }
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
 
         @media (max-width: 768px) {
             .grid-2 { grid-template-columns: 1fr; }
@@ -140,13 +136,13 @@
 
     <div class="container">
         
-        <h1 class="hero-title hero-animate">The Architecture of Choice.</h1>
-        <p class="hero-subtitle hero-animate">
+        <h1 class="hero-title">The Architecture of Choice.</h1>
+        <p class="hero-subtitle">
             Behavioral Science (BeSci) isn't just an academic theory; it is the applied science of human decision-making. Here is a look at the landscape, the policy impact in India, and how you can map your career into this domain.
         </p>
 
-        <h2 class="section-title reveal" style="margin-top: 20px;">Public Policy & The Indian Landscape</h2>
-        <div class="story-card reveal">
+        <h2 class="section-title" style="margin-top: 20px;">Public Policy & The Indian Landscape</h2>
+        <div class="story-card">
             <p class="story-narrative">
                 For decades, traditional economics assumed humans were perfectly rational calculators. Behavioral science argues the opposite: we are predictably irrational. In the context of a massive, diverse population like India, understanding this irrationality is the key to effective governance.
             </p>
@@ -166,10 +162,10 @@
             </p>
         </div>
 
-        <h2 class="section-title reveal">Career Pathways in BeSci</h2>
-        <p class="story-narrative reveal">Behavioral Science is a horizontal skill. It doesn't restrict you to one industry; it acts as a multiplier across various domains. Here are the primary pathways:</p>
+        <h2 class="section-title">Career Pathways in BeSci</h2>
+        <p class="story-narrative">Behavioral Science is a horizontal skill. It doesn't restrict you to one industry; it acts as a multiplier across various domains. Here are the primary pathways:</p>
 
-        <div class="grid-2 reveal">
+        <div class="grid-2">
             <div class="pathway-card">
                 <h3 class="pathway-title">1. Public Policy Advisor</h3>
                 <p class="pathway-desc">Working with government bodies, NGOs, or think tanks (like J-PAL or NITI Aayog) to design interventions that increase policy compliance, public health outcomes, and sustainable agriculture.</p>
@@ -191,10 +187,10 @@
             </div>
         </div>
 
-        <h2 class="section-title reveal">The Transition Engine</h2>
-        <p class="story-narrative reveal" style="text-align: center;">Curious how your current skills translate into Behavioral Science? Select your domain below for a personalized integration guide.</p>
+        <h2 class="section-title">The Transition Engine</h2>
+        <p class="story-narrative" style="text-align: center;">Curious how your current skills translate into Behavioral Science? Select your domain below for a personalized integration guide.</p>
 
-        <div class="interactive-tool reveal">
+        <div class="interactive-tool">
             <div class="tool-header">
                 <label class="tool-label">What is your current or target domain?</label>
                 <select id="domainSelect" class="domain-select" onchange="generateGuide()">
@@ -231,28 +227,6 @@
         function toggleMenu() {
             document.getElementById('menuOverlay').classList.toggle('open');
         }
-
-        // --- SCROLL REVEAL (WITH FAILSAFE) ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const reveals = document.querySelectorAll('.reveal');
-            
-            const revealOnScroll = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.05, rootMargin: "0px 0px 50px 0px" });
-
-            reveals.forEach(reveal => revealOnScroll.observe(reveal));
-            
-            // Failsafe: Automatically reveal the first 3 items so the screen is NEVER blank
-            setTimeout(() => {
-                for(let i=0; i<3; i++){
-                    if(reveals[i]) reveals[i].classList.add('active');
-                }
-            }, 200);
-        });
 
         // --- TRANSITION ENGINE LOGIC ---
         const guideData = {
@@ -302,4 +276,22 @@
                     <h4 class="result-title">Your Secret Weapon</h4>
                     <p class="result-text">${data.advantage}</p>
                 </div>
- 
+                <div class="result-section">
+                    <h4 class="result-title">How to Apply BeSci Today</h4>
+                    <p class="result-text">${data.apply}</p>
+                </div>
+                <div class="result-section" style="margin-bottom: 0;">
+                    <h4 class="result-title">Starter Reading List</h4>
+                    <div>${booksHtml}</div>
+                </div>
+            `;
+
+            resultBox.style.display = 'none';
+            setTimeout(() => {
+                resultBox.innerHTML = html;
+                resultBox.style.display = 'block';
+            }, 50);
+        }
+    </script>
+</body>
+</html>
