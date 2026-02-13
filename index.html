@@ -118,7 +118,6 @@
             overflow: hidden;
         }
 
-        /* The Image Itself */
         .photo-frame img { 
             width: 100%; height: 100%; 
             object-fit: cover; 
@@ -127,7 +126,6 @@
             display: block;
         }
 
-        /* Fallback if image fails (Colored Box) */
         .photo-frame img:before {
             content: "Arvind B.";
             display: flex; align-items: center; justify-content: center;
@@ -144,26 +142,21 @@
         .story-title { font-size: 2.2rem; margin-bottom: 15px; }
         .story-narrative { font-size: 1.25rem; color: var(--text-main); margin-bottom: 25px; }
         
+        /* --- ACHIEVEMENT CARD SPECIFIC --- */
+        .achievement-card { 
+            background: var(--bg-color); 
+            border-left: 6px solid var(--accent-dark); 
+            padding: 30px; 
+            margin-bottom: 30px; 
+            border-radius: 0 12px 12px 0;
+            box-shadow: 2px 4px 10px rgba(0,0,0,0.05);
+        }
+        .award-icon { font-size: 2rem; margin-right: 15px; vertical-align: middle; }
+        .achievement-title { font-size: 1.8rem; color: var(--text-main); margin-bottom: 10px; display: inline-block; vertical-align: middle; }
+        .achievement-desc { font-size: 1.15rem; color: var(--text-muted); text-align: justify; }
+
         .skills-applied { background: var(--bg-color); border-left: 4px solid var(--accent-mid); padding: 20px; border-radius: 0 8px 8px 0; font-size: 1.1rem; color: var(--text-muted); }
         .skills-applied span { font-weight: 700; color: var(--accent-dark); }
-
-        /* --- METHOD & MIND STYLES --- */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }
-        
-        .method-step { position: relative; padding-left: 40px; margin-bottom: 30px; }
-        .method-step::before { content: ''; position: absolute; left: 0; top: 10px; width: 20px; height: 20px; border: 2px solid var(--accent-dark); border-radius: 50%; background: var(--bg-color); }
-        .method-step::after { content: ''; position: absolute; left: 9px; top: 30px; width: 2px; height: 100%; background: var(--border-color); }
-        .method-step:last-child::after { display: none; }
-        .step-title { font-size: 1.5rem; font-weight: 700; color: var(--accent-dark); margin-bottom: 5px; }
-        .step-desc { font-size: 1.1rem; color: var(--text-muted); }
-
-        .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 20px; }
-        .tool-card { background: var(--bg-color); border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; text-align: center; box-shadow: 2px 2px 0 var(--border-color); }
-        .tool-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
-        .tool-name { font-weight: 700; color: var(--text-main); }
-
-        .sticky-note { background: #fff7d1; color: #555; padding: 20px; font-family: 'Kalam', cursive; box-shadow: 2px 4px 6px rgba(0,0,0,0.1); transform: rotate(-2deg); margin-bottom: 20px; border-top: 10px solid rgba(0,0,0,0.05); }
-        .sticky-note:nth-child(even) { transform: rotate(2deg); background: #e0f7fa; }
 
         /* Animation Classes */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s; }
@@ -174,6 +167,7 @@
             .grid-2 { grid-template-columns: 1fr; }
             .photo-frame { margin: 0 auto; width: 250px; height: 300px; }
             .hero-title { font-size: 3.5rem; }
+            .achievement-card { padding: 20px; }
         }
     </style>
 </head>
@@ -193,9 +187,7 @@
         <a href="#" class="menu-link" onclick="navigate('journal')">1. The Journal (Home)</a>
         <a href="#" class="menu-link" onclick="navigate('method')">2. Method & Mind</a>
         <a href="case-studies.html" class="menu-link">3. Case Files (Archive)</a>
-        
         <a href="domain.html" class="menu-link">4. BeSci Domain & Careers</a>
-        
         <a href="mailto:arvindbaskar02@gmail.com" class="menu-link">5. Contact Me</a>
         <button class="theme-toggle-sm" onclick="toggleTheme()" id="themeBtn">Switch to Dark Mode</button>
         <div style="margin-top: 30px; font-size: 2rem; cursor: pointer;" onclick="toggleMenu()">✕ Close Menu</div>
@@ -207,7 +199,7 @@
                 <div class="hero-text">
                     <h1 class="hero-title">Decoding the human element.</h1>
                     <p class="hero-subtitle">
-                        I am a Behavioral Scientist. Data tells us <em>what</em> is happening; psychology tells us <em>why</em>. This is my journal of translating human behavior into actionable frameworks for agriculture and policy.
+                        I am a Behavioral Scientist. Data tells us <em>what</em> is happening; psychology tells us <em>why</em>. This is my journal of translating human behavior into actionable frameworks for agriculture, policy, and technology.
                     </p>
                 </div>
                 <div class="photo-container">
@@ -239,6 +231,41 @@
                     <strong>Skills Applied:</strong> <span>Strategic Thinking</span>, <span>Data Visualization</span>.
                 </div>
             </div>
+
+            <h2 class="section-title reveal" style="margin-top: 40px;">Milestones & Recognition</h2>
+            <div class="story-card reveal">
+                
+                <div class="achievement-card">
+                    <div>
+                        <span class="award-icon">🏛️</span>
+                        <h3 class="achievement-title">State Finalist – TN-EDII Startup Competition</h3>
+                    </div>
+                    <p class="achievement-desc">
+                        <em>Cook2You</em> was born out of a simple desire to help exhausted urban workers eat better by reducing the friction of meal prep. Being recognized as a state finalist by the Tamil Nadu Government and the Entrepreneurship Development and Innovation Institute (TN-EDII) was an incredibly humbling experience. It validated not just the business model, but our core behavioral hypothesis: when you make nutrition the path of least resistance, people will choose it. This platform taught me how large public institutions evaluate grassroots impact and scalability.
+                    </p>
+                </div>
+
+                <div class="achievement-card">
+                    <div>
+                        <span class="award-icon">🦈</span>
+                        <h3 class="achievement-title">Winner – Shark Tank, Indian Maritime University</h3>
+                    </div>
+                    <p class="achievement-desc">
+                        Pitching here was a masterclass in communicating complex behavioral solutions simply. Winning this event was a tremendous team effort and a reminder that when you genuinely focus on reducing human fatigue, investors and users alike immediately connect with the vision.
+                    </p>
+                </div>
+
+                <div class="achievement-card">
+                    <div>
+                        <span class="award-icon">💡</span>
+                        <h3 class="achievement-title">Top Startup Recognition – IIT Kharagpur</h3>
+                    </div>
+                    <p class="achievement-desc">
+                        We had the privilege of presenting our model among some of the brightest technical minds in the country. Being highlighted here reinforced a profound lesson for me: the most advanced technology is useless if it ignores human psychology. It sharpened my approach to bridging tech and human behavior.
+                    </p>
+                </div>
+
+            </div>
             
             <div style="text-align: center; margin-top: 50px; margin-bottom: 50px;">
                 <a href="case-studies.html" style="font-family: 'Caveat', cursive; font-size: 2rem; color: var(--accent-dark); text-decoration: none; border-bottom: 2px dashed var(--accent-dark);">Read Full Case Studies ➜</a>
@@ -257,72 +284,45 @@
                 <div class="reveal">
                     <h2 class="section-title">My Framework</h2>
                     <div style="background: var(--surface-color); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color);">
-                        
                         <div class="method-step">
                             <div class="step-title">1. Diagnosis</div>
-                            <div class="step-desc">Identifying the "Behavioral Gap". Why are people acting differently than the optimal model suggests? (e.g., Loss Aversion in crop selection).</div>
+                            <div class="step-desc">Identifying the "Behavioral Gap". Why are people acting differently than the optimal model suggests?</div>
                         </div>
-
                         <div class="method-step">
                             <div class="step-title">2. Hypothesis</div>
                             <div class="step-desc">Formulating a psychological theory. Is it a lack of ability? A lack of motivation? Or a missing trigger?</div>
                         </div>
-
                         <div class="method-step">
                             <div class="step-title">3. Intervention Design</div>
                             <div class="step-desc">Designing the "Nudge" or "Choice Architecture". This is where UX and policy writing happen.</div>
                         </div>
-
                         <div class="method-step">
                             <div class="step-title">4. Impact Measurement</div>
                             <div class="step-desc">Using RCTs (Randomized Control Trials) or A/B testing to validate if the behavior actually changed.</div>
                         </div>
-
                     </div>
                 </div>
 
                 <div class="reveal">
                     <h2 class="section-title">Mental Models</h2>
-                    
                     <div class="sticky-note">
-                        <strong>The Cobweb Theorem:</strong>
-                        <br>Farmers base future production on past prices, causing cycles of volatility. We must break this loop with predictive data.
+                        <strong>The Cobweb Theorem:</strong><br>Farmers base future production on past prices, causing cycles of volatility. We must break this loop with predictive data.
                     </div>
-
                     <div class="sticky-note">
-                        <strong>Hyperbolic Discounting:</strong>
-                        <br>Humans prefer smaller, immediate rewards over larger, later ones. Sustainable farming requires bridging this gap.
+                        <strong>Hyperbolic Discounting:</strong><br>Humans prefer smaller, immediate rewards over larger, later ones. Sustainable farming requires bridging this gap.
                     </div>
-
                     <div class="sticky-note">
-                        <strong>Narrative Fallacy:</strong>
-                        <br>We trust stories more than statistics. To change policy adoption, we must change the story, not just the data.
+                        <strong>Narrative Fallacy:</strong><br>We trust stories more than statistics. To change policy adoption, we must change the story, not just the data.
                     </div>
                 </div>
             </div>
 
             <h2 class="section-title reveal">The Toolkit</h2>
             <div class="tool-grid reveal" style="margin-bottom: 50px;">
-                <div class="tool-card">
-                    <span class="tool-icon">📊</span>
-                    <div class="tool-name">SPSS & R</div>
-                    <div style="font-size:0.8rem; color:var(--text-muted)">Statistical Analysis</div>
-                </div>
-                <div class="tool-card">
-                    <span class="tool-icon">📈</span>
-                    <div class="tool-name">Looker Studio</div>
-                    <div style="font-size:0.8rem; color:var(--text-muted)">Data Visualization</div>
-                </div>
-                <div class="tool-card">
-                    <span class="tool-icon">📝</span>
-                    <div class="tool-name">Survey Design</div>
-                    <div style="font-size:0.8rem; color:var(--text-muted)">Qualtrics / Google</div>
-                </div>
-                <div class="tool-card">
-                    <span class="tool-icon">🧠</span>
-                    <div class="tool-name">Scale Creation</div>
-                    <div style="font-size:0.8rem; color:var(--text-muted)">Assessment Tools</div>
-                </div>
+                <div class="tool-card"><span class="tool-icon">📊</span><div class="tool-name">SPSS & R</div><div style="font-size:0.8rem; color:var(--text-muted)">Statistical Analysis</div></div>
+                <div class="tool-card"><span class="tool-icon">📈</span><div class="tool-name">Looker Studio</div><div style="font-size:0.8rem; color:var(--text-muted)">Data Visualization</div></div>
+                <div class="tool-card"><span class="tool-icon">📝</span><div class="tool-name">Survey Design</div><div style="font-size:0.8rem; color:var(--text-muted)">Qualtrics / Google</div></div>
+                <div class="tool-card"><span class="tool-icon">🧠</span><div class="tool-name">Scale Creation</div><div style="font-size:0.8rem; color:var(--text-muted)">Assessment Tools</div></div>
             </div>
             
             <div style="text-align: center; margin-top: 20px; margin-bottom: 80px;">
@@ -333,7 +333,6 @@
     </div>
 
     <script>
-        // Toggle Theme
         function toggleTheme() {
             const htmlEl = document.documentElement;
             const btn = document.getElementById('themeBtn');
@@ -346,38 +345,10 @@
             }
         }
 
-        // Menu Logic
         function toggleMenu() {
             document.getElementById('menuOverlay').classList.toggle('open');
         }
 
-        // Navigation Logic (SPA Switch)
         function navigate(pageId) {
             document.getElementById('menuOverlay').classList.remove('open');
-            document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
-            setTimeout(() => {
-                document.getElementById(pageId).classList.add('active');
-                window.scrollTo(0,0);
-                triggerScrollReveal();
-            }, 300);
-        }
-
-        // Scroll Reveal
-        function triggerScrollReveal() {
-            const reveals = document.querySelectorAll('.reveal');
-            reveals.forEach(reveal => {
-                const windowHeight = window.innerHeight;
-                const elementTop = reveal.getBoundingClientRect().top;
-                if (elementTop < windowHeight) {
-                    reveal.classList.add('active');
-                }
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            triggerScrollReveal();
-            window.addEventListener('scroll', triggerScrollReveal);
-        });
-    </script>
-</body>
-</html>
+            document.querySelectorAll('.page-view').forEach(p => 
