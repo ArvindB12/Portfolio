@@ -11,34 +11,50 @@
 
     <style>
         :root {
-            --bg-color: #F6FEDB; --surface-color: #E6D3A3; --accent-light: #D8D174;
-            --accent-mid: #B6C454; --accent-dark: #91972A; --text-main: #2a2e1d;
-            --text-muted: #545943; --border-color: rgba(145, 151, 42, 0.3);
-            --shadow: 0 10px 30px rgba(145, 151, 42, 0.15); --tape-color: rgba(255, 255, 255, 0.4);
+            /* Light Theme */
+            --bg-color: #F6FEDB;
+            --surface-color: #E6D3A3;
+            --accent-light: #D8D174;
+            --accent-mid: #B6C454;
+            --accent-dark: #91972A;
+            --text-main: #2a2e1d;
+            --text-muted: #545943;
+            --border-color: rgba(145, 151, 42, 0.3);
+            --shadow: 0 10px 30px rgba(145, 151, 42, 0.15);
+            --tape-color: rgba(255, 255, 255, 0.4);
         }
 
         [data-theme="dark"] {
-            --bg-color: #161811; --surface-color: #24271c; --accent-light: #91972A;
-            --accent-mid: #B6C454; --accent-dark: #D8D174; --text-main: #F6FEDB;
-            --text-muted: #E6D3A3; --border-color: rgba(246, 254, 219, 0.1);
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5); --tape-color: rgba(255, 255, 255, 0.15);
+            /* Dark Theme */
+            --bg-color: #161811;
+            --surface-color: #24271c;
+            --accent-light: #91972A;
+            --accent-mid: #B6C454;
+            --accent-dark: #D8D174;
+            --text-main: #F6FEDB;
+            --text-muted: #E6D3A3;
+            --border-color: rgba(246, 254, 219, 0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --tape-color: rgba(255, 255, 255, 0.15);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color 0.4s, color 0.4s; }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.4s, color 0.4s; }
         body { font-family: 'Kalam', cursive; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
         h1, h2, h3, h4 { font-family: 'Caveat', cursive; font-weight: 700; line-height: 1.1; }
 
-        /* Navigation */
+        /* --- NAVIGATION --- */
         nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: linear-gradient(var(--bg-color) 80%, transparent); pointer-events: none; }
         .nav-content { pointer-events: auto; display: flex; align-items: center; gap: 20px; }
         .brand { pointer-events: auto; font-family: 'Caveat', cursive; font-size: 2rem; color: var(--accent-dark); text-decoration: none; font-weight: 700; }
+
         .menu-btn { background: var(--surface-color); border: 2px solid var(--accent-dark); width: 50px; height: 50px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; cursor: pointer; box-shadow: 4px 4px 0 var(--accent-mid); pointer-events: auto; }
         .menu-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--accent-mid); }
         .bar { width: 24px; height: 2px; background: var(--text-main); border-radius: 2px; transition: 0.3s; }
 
-        /* Menu Overlay */
-        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 900; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transform: translateY(-20px); transition: 0.4s; }
+        /* --- MENU OVERLAY --- */
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 900; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transform: translateY(-20px); transition: all 0.4s; }
         .menu-overlay.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        
         .menu-link { font-family: 'Caveat', cursive; font-size: 2.5rem; color: var(--text-main); text-decoration: none; margin: 15px 0; opacity: 0; transform: translateY(20px); transition: 0.5s; }
         .menu-overlay.open .menu-link { opacity: 1; transform: translateY(0); }
         .menu-overlay.open .menu-link:nth-child(1) { transition-delay: 0.1s; }
@@ -48,37 +64,42 @@
         .menu-overlay.open .menu-link:nth-child(5) { transition-delay: 0.3s; }
         .theme-toggle-sm { margin-top: 30px; padding: 10px 20px; border-radius: 30px; border: 2px solid var(--accent-dark); background: transparent; color: var(--text-main); font-family: 'Kalam', cursive; font-weight: 700; cursor: pointer; }
 
-        /* Page Structure */
-        .page-view { display: none; opacity: 0; padding-top: 100px; min-height: 100vh; transition: 0.4s; }
-        .page-view.active { display: block; opacity: 1; }
+        /* --- PAGE STRUCTURE --- */
+        .page-view { display: none; padding-top: 100px; min-height: 100vh; animation: fadeIn 0.5s ease; }
+        .page-view.active { display: block; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
         .container { max-width: 1000px; margin: 0 auto; width: 100%; padding: 0 5%; }
         .section-title { font-size: 3rem; color: var(--accent-mid); margin-bottom: 40px; border-bottom: 2px dashed var(--border-color); padding-bottom: 10px; display: inline-block; }
         
-        /* Hero & Cards */
         .hero-wrapper { display: flex; align-items: center; gap: 60px; padding-top: 40px; margin-bottom: 80px;}
         .hero-text { flex: 1; }
         .hero-title { font-size: clamp(3.5rem, 6vw, 5.5rem); color: var(--accent-dark); margin-bottom: 20px; }
         .hero-subtitle { font-size: clamp(1.3rem, 2.5vw, 1.8rem); color: var(--text-muted); max-width: 700px; }
+
+        /* --- PHOTO STYLES --- */
         .photo-container { flex-shrink: 0; position: relative; transform: rotate(-3deg); transition: transform 0.3s ease; }
         .photo-container:hover { transform: rotate(0deg) scale(1.02); }
         .photo-frame { width: 280px; height: 340px; background: #fff; padding: 15px 15px 60px 15px; box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .photo-frame img { width: 100%; height: 100%; object-fit: cover; filter: sepia(10%); border: 1px solid #ddd; display: block; }
         .tape { position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(2deg); width: 120px; height: 35px; background-color: var(--tape-color); backdrop-filter: blur(5px); box-shadow: 0 1px 3px rgba(0,0,0,0.1); z-index: 10; }
 
+        /* --- CONTENT CARDS --- */
         .story-card { background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 40px; margin-bottom: 40px; box-shadow: var(--shadow); }
         .story-date { font-family: 'Caveat', cursive; font-size: 1.5rem; color: var(--accent-dark); margin-bottom: 10px; display: block; }
         .story-title { font-size: 2.2rem; margin-bottom: 15px; }
         .story-narrative { font-size: 1.25rem; color: var(--text-main); margin-bottom: 25px; }
-        .skills-applied { background: var(--bg-color); border-left: 4px solid var(--accent-mid); padding: 20px; border-radius: 0 8px 8px 0; font-size: 1.1rem; color: var(--text-muted); }
-        .skills-applied span { font-weight: 700; color: var(--accent-dark); }
-
-        /* Achievements Card */
+        
         .achievement-card { background: var(--bg-color); border-left: 6px solid var(--accent-dark); padding: 30px; margin-bottom: 30px; border-radius: 0 12px 12px 0; box-shadow: 2px 4px 10px rgba(0,0,0,0.05); }
         .award-icon { font-size: 2rem; margin-right: 15px; vertical-align: middle; }
         .achievement-title { font-size: 1.8rem; color: var(--text-main); margin-bottom: 10px; display: inline-block; vertical-align: middle; }
         .achievement-desc { font-size: 1.15rem; color: var(--text-muted); text-align: justify; }
 
-        /* Method & Mind Grid */
+        .skills-applied { background: var(--bg-color); border-left: 4px solid var(--accent-mid); padding: 20px; border-radius: 0 8px 8px 0; font-size: 1.1rem; color: var(--text-muted); }
+        .skills-applied span { font-weight: 700; color: var(--accent-dark); }
+
+        /* --- METHOD & MIND STYLES --- */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }
         .method-step { position: relative; padding-left: 40px; margin-bottom: 30px; }
         .method-step::before { content: ''; position: absolute; left: 0; top: 10px; width: 20px; height: 20px; border: 2px solid var(--accent-dark); border-radius: 50%; background: var(--bg-color); }
@@ -94,19 +115,9 @@
         .sticky-note { background: #fff7d1; color: #555; padding: 20px; font-family: 'Kalam', cursive; box-shadow: 2px 4px 6px rgba(0,0,0,0.1); transform: rotate(-2deg); margin-bottom: 20px; border-top: 10px solid rgba(0,0,0,0.05); }
         .sticky-note:nth-child(even) { transform: rotate(2deg); background: #e0f7fa; }
 
-        /* THE NEXT CHAPTER BUTTON (THE SECRET SAUCE) */
-        .next-chapter-btn {
-            display: block; width: 100%; max-width: 450px; margin: 60px auto 100px auto; padding: 18px 30px;
-            background: var(--accent-dark); color: #F6FEDB; text-align: center; border-radius: 40px;
-            font-family: 'Caveat', cursive; font-size: 2.2rem; text-decoration: none; font-weight: 700;
-            box-shadow: 0 6px 0 var(--accent-mid); transition: all 0.1s;
-        }
-        .next-chapter-btn:active { transform: translateY(6px); box-shadow: 0 0 0 var(--accent-mid); }
-        .next-chapter-btn:hover { filter: brightness(1.1); color: #fff; }
-
-        /* Animation Classes */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        /* --- THE "NEXT CHAPTER" BOOK FLOW BUTTON --- */
+        .next-chapter-btn { display: block; width: 100%; background: var(--surface-color); color: var(--accent-dark); text-align: center; padding: 30px 20px; margin-top: 40px; margin-bottom: 80px; font-family: 'Caveat', cursive; font-size: 2.5rem; font-weight: 700; text-decoration: none; border: 2px dashed var(--accent-dark); border-radius: 12px; transition: all 0.3s ease; }
+        .next-chapter-btn:hover { background: var(--accent-dark); color: var(--bg-color); transform: translateY(-5px); box-shadow: var(--shadow); }
 
         @media (max-width: 850px) {
             .hero-wrapper { flex-direction: column-reverse; text-align: center; gap: 40px; }
@@ -114,7 +125,7 @@
             .photo-frame { margin: 0 auto; width: 250px; height: 300px; }
             .hero-title { font-size: 3.5rem; }
             .achievement-card { padding: 20px; }
-            .next-chapter-btn { font-size: 1.8rem; width: 90%; }
+            .next-chapter-btn { font-size: 2rem; padding: 20px; }
         }
     </style>
 </head>
@@ -142,7 +153,7 @@
 
     <div id="journal" class="page-view active">
         <div class="container">
-            <div class="hero-wrapper reveal">
+            <div class="hero-wrapper">
                 <div class="hero-text">
                     <h1 class="hero-title">Decoding the human element.</h1>
                     <p class="hero-subtitle">
@@ -157,8 +168,8 @@
                 </div>
             </div>
 
-            <h2 class="section-title reveal">The Man Behind the Method</h2>
-            <div class="story-card reveal">
+            <h2 class="section-title">The Man Behind the Method</h2>
+            <div class="story-card">
                 <p class="story-narrative">
                     I am driven by one core mission: to solve real problems that affect real people at scale. Agriculture isn't just "production"—it's a massive <strong>human decision-making ecosystem</strong> shaped by beliefs, habits, and social norms.
                 </p>
@@ -167,8 +178,8 @@
                 </div>
             </div>
 
-            <h2 class="section-title reveal">Strategic Design</h2>
-            <div class="story-card reveal">
+            <h2 class="section-title">Strategic Design</h2>
+            <div class="story-card">
                 <span class="story-date">April 2025</span>
                 <h3 class="story-title">KriShiKsha: Demand-Led Farming</h3>
                 <p class="story-narrative">
@@ -179,8 +190,8 @@
                 </div>
             </div>
 
-            <h2 class="section-title reveal" style="margin-top: 40px;">Milestones & Recognition</h2>
-            <div class="story-card reveal">
+            <h2 class="section-title" style="margin-top: 40px;">Milestones & Recognition</h2>
+            <div class="story-card">
                 
                 <div class="achievement-card">
                     <div>
@@ -188,7 +199,7 @@
                         <h3 class="achievement-title">State Finalist – TN-EDII Startup Competition</h3>
                     </div>
                     <p class="achievement-desc">
-                        <em>Cook2You</em> was born out of a simple desire to help exhausted urban workers eat better by reducing the friction of meal prep. Being recognized as a state finalist by the Tamil Nadu Government and the Entrepreneurship Development and Innovation Institute (TN-EDII) validated not just the business model, but our core behavioral hypothesis: when you make nutrition the path of least resistance, people will choose it. This platform taught me how large public institutions evaluate grassroots impact and scalability.
+                        <em>Cook2You</em> was born out of a simple desire to help exhausted urban workers eat better by reducing the friction of meal prep. Being recognized as a state finalist by the Tamil Nadu Government and the Entrepreneurship Development and Innovation Institute (TN-EDII) was an incredibly humbling experience. It validated not just the business model, but our core behavioral hypothesis: when you make nutrition the path of least resistance, people will choose it. This platform taught me how large public institutions evaluate grassroots impact and scalability.
                     </p>
                 </div>
 
@@ -213,20 +224,20 @@
                 </div>
             </div>
             
-            <a href="#" onclick="navigate('method'); return false;" class="next-chapter-btn reveal">Next: See My Method & Mind ➜</a>
-
+            <a href="#" onclick="navigate('method')" class="next-chapter-btn">Next Chapter: Method & Mind ➜</a>
+            
         </div>
     </div>
 
     <div id="method" class="page-view">
         <div class="container">
-            <h1 class="hero-title reveal">The Lab.</h1>
-            <p class="hero-subtitle reveal" style="margin-bottom: 60px;">
+            <h1 class="hero-title">The Lab.</h1>
+            <p class="hero-subtitle" style="margin-bottom: 60px;">
                 Behavioral Science isn't magic; it's a rigorous process. Here is how I break down problems, the tools I use, and the mental models that guide my thinking.
             </p>
             
             <div class="grid-2">
-                <div class="reveal">
+                <div>
                     <h2 class="section-title">My Framework</h2>
                     <div style="background: var(--surface-color); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color);">
                         <div class="method-step">
@@ -248,7 +259,7 @@
                     </div>
                 </div>
 
-                <div class="reveal">
+                <div>
                     <h2 class="section-title">Mental Models</h2>
                     <div class="sticky-note">
                         <strong>The Cobweb Theorem:</strong><br>Farmers base future production on past prices, causing cycles of volatility. We must break this loop with predictive data.
@@ -262,15 +273,15 @@
                 </div>
             </div>
 
-            <h2 class="section-title reveal">The Toolkit</h2>
-            <div class="tool-grid reveal" style="margin-bottom: 50px;">
+            <h2 class="section-title">The Toolkit</h2>
+            <div class="tool-grid" style="margin-bottom: 50px;">
                 <div class="tool-card"><span class="tool-icon">📊</span><div class="tool-name">SPSS & R</div><div style="font-size:0.8rem; color:var(--text-muted)">Statistical Analysis</div></div>
                 <div class="tool-card"><span class="tool-icon">📈</span><div class="tool-name">Looker Studio</div><div style="font-size:0.8rem; color:var(--text-muted)">Data Visualization</div></div>
                 <div class="tool-card"><span class="tool-icon">📝</span><div class="tool-name">Survey Design</div><div style="font-size:0.8rem; color:var(--text-muted)">Qualtrics / Google</div></div>
                 <div class="tool-card"><span class="tool-icon">🧠</span><div class="tool-name">Scale Creation</div><div style="font-size:0.8rem; color:var(--text-muted)">Assessment Tools</div></div>
             </div>
             
-            <a href="case-studies.html" class="next-chapter-btn reveal">Next: Read The Case Files ➜</a>
+            <a href="case-studies.html" class="next-chapter-btn">Next Chapter: Explore Case Files ➜</a>
             
         </div>
     </div>
@@ -279,4 +290,3 @@
         function toggleTheme() {
             const htmlEl = document.documentElement;
             const btn = document.getElementById('themeBtn');
-            if (htmlEl.getAttribute('data-theme') === 'light
