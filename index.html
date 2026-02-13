@@ -8,7 +8,26 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
-
+        /* --- FLOATING LINKEDIN BUTTON --- */
+        .floating-linkedin {
+            position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px;
+            background-color: var(--accent-dark); color: var(--bg-color);
+            border-radius: 50%; border: 2px dashed var(--bg-color);
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 4px 4px 0px rgba(145, 151, 42, 0.3);
+            text-decoration: none; z-index: 9999; transition: all 0.3s ease;
+        }
+        .floating-linkedin:hover, .floating-linkedin:active {
+            transform: translate(-3px, -3px) rotate(5deg); 
+            box-shadow: 7px 7px 0px rgba(145, 151, 42, 0.4);
+        }
+        .floating-linkedin svg { width: 30px; height: 30px; fill: currentColor; }
+        
+        @media (max-width: 768px) {
+            .floating-linkedin { bottom: 20px; right: 20px; width: 55px; height: 55px; }
+            .floating-linkedin svg { width: 25px; height: 25px; }
+        }
+    
     <style>
         :root {
             --bg-color: #F6FEDB; --surface-color: #E6D3A3; --accent-light: #D8D174;
