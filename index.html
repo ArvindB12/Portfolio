@@ -8,26 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
-        /* --- FLOATING LINKEDIN BUTTON --- */
-        .floating-linkedin {
-            position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px;
-            background-color: var(--accent-dark); color: var(--bg-color);
-            border-radius: 50%; border: 2px dashed var(--bg-color);
-            display: flex; justify-content: center; align-items: center;
-            box-shadow: 4px 4px 0px rgba(145, 151, 42, 0.3);
-            text-decoration: none; z-index: 9999; transition: all 0.3s ease;
-        }
-        .floating-linkedin:hover, .floating-linkedin:active {
-            transform: translate(-3px, -3px) rotate(5deg); 
-            box-shadow: 7px 7px 0px rgba(145, 151, 42, 0.4);
-        }
-        .floating-linkedin svg { width: 30px; height: 30px; fill: currentColor; }
-        
-        @media (max-width: 768px) {
-            .floating-linkedin { bottom: 20px; right: 20px; width: 55px; height: 55px; }
-            .floating-linkedin svg { width: 25px; height: 25px; }
-        }
-    
+
     <style>
         :root {
             --bg-color: #F6FEDB; --surface-color: #E6D3A3; --accent-light: #D8D174;
@@ -93,6 +74,21 @@
         /* Buttons */
         .next-chapter-btn { display: block; width: 100%; background: var(--surface-color); color: var(--accent-dark); text-align: center; padding: 30px 20px; margin-top: 40px; margin-bottom: 80px; font-family: 'Caveat', cursive; font-size: 2.5rem; font-weight: 700; border: 2px dashed var(--accent-dark); border-radius: 12px; text-decoration: none; }
 
+        /* --- FLOATING LINKEDIN BUTTON --- */
+        .floating-linkedin {
+            position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px;
+            background-color: var(--accent-dark); color: var(--bg-color);
+            border-radius: 50%; border: 2px dashed var(--bg-color);
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 4px 4px 0px rgba(145, 151, 42, 0.3);
+            text-decoration: none; z-index: 9999; transition: all 0.3s ease;
+        }
+        .floating-linkedin:hover, .floating-linkedin:active {
+            transform: translate(-3px, -3px) rotate(5deg); 
+            box-shadow: 7px 7px 0px rgba(145, 151, 42, 0.4);
+        }
+        .floating-linkedin svg { width: 30px; height: 30px; fill: currentColor; }
+
         @media (max-width: 850px) {
             .hero-wrapper { flex-direction: column-reverse; text-align: center; gap: 40px; }
             .grid-2 { grid-template-columns: 1fr; }
@@ -100,6 +96,8 @@
             .hero-title { font-size: 3.5rem; }
             .story-card, .achievement-card { padding: 25px; }
             .next-chapter-btn { font-size: 1.8rem; padding: 20px; }
+            .floating-linkedin { bottom: 20px; right: 20px; width: 55px; height: 55px; }
+            .floating-linkedin svg { width: 25px; height: 25px; }
         }
     </style>
 </head>
@@ -197,6 +195,12 @@
         </div>
     </div>
 
+    <a href="https://www.linkedin.com/in/YOUR_LINKEDIN_PROFILE" target="_blank" class="floating-linkedin" aria-label="Connect on LinkedIn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z"/>
+        </svg>
+    </a>
+
     <script>
         function toggleTheme() {
             const htmlEl = document.documentElement;
@@ -206,11 +210,5 @@
             document.getElementById('menuOverlay').classList.toggle('open');
         }
     </script>
-        <a href="https://www.linkedin.com/in/YOUR_LINKEDIN_PROFILE" target="_blank" class="floating-linkedin" aria-label="Connect on LinkedIn">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-            <path d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z"/>
-        </svg>
-        </a>
-    
 </body>
 </html>
