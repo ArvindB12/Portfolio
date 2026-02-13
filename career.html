@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Career Path Explorer | Behavioural Science</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f4f7f9;
+    margin:0;
+    padding:0;
+}
+header{
+    background:#1f3c88;
+    color:white;
+    padding:30px 20px;
+    text-align:center;
+}
+.container{
+    max-width:900px;
+    margin:40px auto;
+    background:white;
+    padding:30px;
+    border-radius:8px;
+    box-shadow:0 0 15px rgba(0,0,0,0.1);
+}
+h2{
+    color:#1f3c88;
+}
+select, button{
+    width:100%;
+    padding:12px;
+    margin-top:15px;
+    font-size:16px;
+}
+button{
+    background:#1f3c88;
+    color:white;
+    border:none;
+    cursor:pointer;
+    border-radius:5px;
+}
+button:hover{
+    opacity:0.9;
+}
+#result{
+    margin-top:30px;
+    padding:20px;
+    background:#eef3f8;
+    border-left:5px solid #1f3c88;
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Career Path Explorer – Psychology & Behavioural Science</h1>
+    <p>Psychology is a powerful tool for nation building, rural development and policy transformation.</p>
+</header>
+
+<div class="container">
+
+    <h2>Step 1: Choose Your Main Interest</h2>
+    <select id="mainField" onchange="loadSubFields()">
+        <option value="">-- Select Field --</option>
+        <option value="govt">Government & Public Policy</option>
+        <option value="agri">Agriculture & Rural Development</option>
+        <option value="research">Research & Data Behaviour</option>
+        <option value="marketing">Marketing & Consumer Behaviour</option>
+        <option value="ux">UX / Human Behaviour in Technology</option>
+    </select>
+
+    <h2>Step 2: Choose Sub Area</h2>
+    <select id="subField">
+        <option value="">-- Select Sub Area --</option>
+    </select>
+
+    <button onclick="generateCareer()">Generate Career Path</button>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+function loadSubFields(){
+    const main = document.getElementById("mainField").value;
+    const sub = document.getElementById("subField");
+
+    let options = "";
+
+    if(main==="govt"){
+        options = `
+        <option>Policy Making</option>
+        <option>Social Welfare Programs</option>
+        <option>Behavioural Insights Units</option>`;
+    }
+    else if(main==="agri"){
+        options = `
+        <option>Farmer Behaviour Studies</option>
+        <option>Rural Mental Health</option>
+        <option>Agricultural Policy Support</option>`;
+    }
+    else if(main==="research"){
+        options = `
+        <option>Public Behaviour Research</option>
+        <option>Survey & Field Studies</option>`;
+    }
+    else if(main==="marketing"){
+        options = `
+        <option>Government Campaign Strategy</option>
+        <option>Consumer Behaviour Analysis</option>`;
+    }
+    else if(main==="ux"){
+        options = `
+        <option>UX Research for Government Platforms</option>
+        <option>Behaviour Design in Technology</option>`;
+    }
+
+    sub.innerHTML = options;
+}
+
+function generateCareer(){
+    const sub = document.getElementById("subField").value;
+    const result = document.getElementById("result");
+
+    let text = "";
+
+    if(sub==="Farmer Behaviour Studies"){
+        text = `<h3>Agricultural Behaviour Analyst</h3>
+        <p>You will study why farmers adopt or reject government schemes and help improve awareness, training methods and productivity.</p>
+        <p><strong>Workplaces:</strong> Department of Agriculture, KVK, NABARD, Rural Livelihood Missions.</p>`;
+    }
+    else if(sub==="Rural Mental Health"){
+        text = `<h3>Community Behaviour Specialist</h3>
+        <p>Work in farmer stress reduction, suicide prevention and rural mental health programs.</p>
+        <p><strong>Workplaces:</strong> District Mental Health Programs, NGOs, Government Health Departments.</p>`;
+    }
+    else if(sub==="Policy Making"){
+        text = `<h3>Policy Research Officer</h3>
+        <p>Help ministries design people-friendly policies using behavioural science.</p>
+        <p><strong>Workplaces:</strong> NITI Aayog, Planning Commission, Ministries.</p>`;
+    }
+    else if(sub==="Behavioural Insights Units"){
+        text = `<h3>Behavioural Consultant for Government</h3>
+        <p>Improve success rate of schemes by understanding public behaviour.</p>`;
+    }
+    else if(sub==="Government Campaign Strategy"){
+        text = `<h3>Public Awareness Campaign Designer</h3>
+        <p>Create campaigns that people actually respond to.</p>`;
+    }
+    else if(sub==="UX Research for Government Platforms"){
+        text = `<h3>UX Researcher</h3>
+        <p>Improve usability of digital government services using psychology.</p>`;
+    }
+    else{
+        text = `<h3>Behavioural Research Professional</h3>
+        <p>Conduct surveys, field research and behavioural studies for public welfare.</p>`;
+    }
+
+    result.style.display = "block";
+    result.innerHTML = text;
+}
+</script>
+
+</body>
+</html>
