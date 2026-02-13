@@ -11,124 +11,83 @@
 
     <style>
         :root {
-            /* Light Theme */
-            --bg-color: #F6FEDB;
-            --surface-color: #E6D3A3;
-            --accent-light: #D8D174;
-            --accent-mid: #B6C454;
-            --accent-dark: #91972A;
-            --text-main: #2a2e1d;
-            --text-muted: #545943;
-            --border-color: rgba(145, 151, 42, 0.3);
-            --shadow: 0 10px 30px rgba(145, 151, 42, 0.15);
-            --tape-color: rgba(255, 255, 255, 0.4);
+            --bg-color: #F6FEDB; --surface-color: #E6D3A3; --accent-light: #D8D174;
+            --accent-mid: #B6C454; --accent-dark: #91972A; --text-main: #2a2e1d;
+            --text-muted: #545943; --border-color: rgba(145, 151, 42, 0.3);
+            --shadow: 0 10px 30px rgba(145, 151, 42, 0.15); --tape-color: rgba(255, 255, 255, 0.4);
         }
-
         [data-theme="dark"] {
-            /* Dark Theme */
-            --bg-color: #161811;
-            --surface-color: #24271c;
-            --accent-light: #91972A;
-            --accent-mid: #B6C454;
-            --accent-dark: #D8D174;
-            --text-main: #F6FEDB;
-            --text-muted: #E6D3A3;
-            --border-color: rgba(246, 254, 219, 0.1);
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            --tape-color: rgba(255, 255, 255, 0.15);
+            --bg-color: #161811; --surface-color: #24271c; --accent-light: #91972A;
+            --accent-mid: #B6C454; --accent-dark: #D8D174; --text-main: #F6FEDB;
+            --text-muted: #E6D3A3; --border-color: rgba(246, 254, 219, 0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5); --tape-color: rgba(255, 255, 255, 0.15);
         }
-
+        html { scroll-behavior: smooth; }
         * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.4s, color 0.4s; }
         body { font-family: 'Kalam', cursive; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
         h1, h2, h3, h4 { font-family: 'Caveat', cursive; font-weight: 700; line-height: 1.1; }
 
-        /* --- NAVIGATION --- */
+        /* Navigation */
         nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: linear-gradient(var(--bg-color) 85%, transparent); }
-        .nav-content { display: flex; align-items: center; gap: 20px; }
-        .brand { font-family: 'Caveat', cursive; font-size: 2rem; color: var(--accent-dark); text-decoration: none; font-weight: 700; cursor: pointer; background: none; border: none; }
+        .brand { font-family: 'Caveat', cursive; font-size: 2rem; color: var(--accent-dark); text-decoration: none; font-weight: 700; }
+        .menu-btn { background: var(--surface-color); border: 2px solid var(--accent-dark); width: 50px; height: 50px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; cursor: pointer; z-index: 1001; }
+        .bar { width: 24px; height: 2px; background: var(--text-main); border-radius: 2px; }
 
-        /* Hamburger Menu (Changed to Button Native Element) */
-        .menu-btn { background: var(--surface-color); border: 2px solid var(--accent-dark); width: 50px; height: 50px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; cursor: pointer; box-shadow: 4px 4px 0 var(--accent-mid); outline: none; }
-        .menu-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--accent-mid); }
-        .bar { width: 24px; height: 2px; background: var(--text-main); border-radius: 2px; pointer-events: none; }
-
-        /* --- MENU OVERLAY --- */
-        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transform: translateY(-20px); transition: all 0.4s ease; }
+        /* Menu Overlay */
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transform: translateY(-20px); transition: all 0.3s ease; }
         .menu-overlay.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        
-        .menu-link { font-family: 'Caveat', cursive; font-size: 2.5rem; color: var(--text-main); text-decoration: none; margin: 15px 0; background: none; border: none; cursor: pointer; display: block; }
+        .menu-link { font-family: 'Caveat', cursive; font-size: 2.5rem; color: var(--text-main); text-decoration: none; margin: 15px 0; display: block; }
         .theme-toggle-sm { margin-top: 30px; padding: 10px 20px; border-radius: 30px; border: 2px solid var(--accent-dark); background: transparent; color: var(--text-main); font-family: 'Kalam', cursive; font-weight: 700; cursor: pointer; }
         .close-menu-btn { margin-top: 30px; font-size: 2rem; cursor: pointer; color: var(--accent-dark); font-weight: bold; background: none; border: none; font-family: 'Kalam', cursive; }
 
-        /* --- PAGE STRUCTURE --- */
-        .page-view { display: none; padding-top: 100px; min-height: 100vh; animation: fadeIn 0.4s ease; }
-        .page-view.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-
-        .container { max-width: 1000px; margin: 0 auto; width: 100%; padding: 0 5%; }
+        /* Layout */
+        .container { max-width: 1000px; margin: 0 auto; width: 100%; padding: 100px 5% 50px; }
         .section-title { font-size: 3rem; color: var(--accent-mid); margin-bottom: 40px; border-bottom: 2px dashed var(--border-color); padding-bottom: 10px; display: inline-block; }
-        
         .hero-wrapper { display: flex; align-items: center; gap: 60px; padding-top: 40px; margin-bottom: 80px;}
         .hero-text { flex: 1; }
         .hero-title { font-size: clamp(3.5rem, 6vw, 5.5rem); color: var(--accent-dark); margin-bottom: 20px; }
         .hero-subtitle { font-size: clamp(1.3rem, 2.5vw, 1.8rem); color: var(--text-muted); max-width: 700px; }
 
-        /* --- PHOTO STYLES --- */
-        .photo-container { flex-shrink: 0; position: relative; transform: rotate(-3deg); transition: transform 0.3s ease; }
-        .photo-container:hover { transform: rotate(0deg) scale(1.02); }
-        .photo-frame { width: 280px; height: 340px; background: #fff; padding: 15px 15px 60px 15px; box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .photo-frame img { width: 100%; height: 100%; object-fit: cover; filter: sepia(10%); border: 1px solid #ddd; display: block; }
+        /* Photos & Cards */
+        .photo-container { flex-shrink: 0; position: relative; transform: rotate(-3deg); }
+        .photo-frame { width: 280px; height: 340px; background: #fff; padding: 15px 15px 60px 15px; box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center; }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; filter: sepia(10%); border: 1px solid #ddd; }
         .tape { position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(2deg); width: 120px; height: 35px; background-color: var(--tape-color); backdrop-filter: blur(5px); box-shadow: 0 1px 3px rgba(0,0,0,0.1); z-index: 10; }
-
-        /* --- CONTENT CARDS --- */
+        
         .story-card { background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 40px; margin-bottom: 40px; box-shadow: var(--shadow); }
-        .story-date { font-family: 'Caveat', cursive; font-size: 1.5rem; color: var(--accent-dark); margin-bottom: 10px; display: block; }
         .story-title { font-size: 2.2rem; margin-bottom: 15px; }
         .story-narrative { font-size: 1.25rem; color: var(--text-main); margin-bottom: 25px; text-align: justify; }
-        
-        .achievement-card { background: var(--bg-color); border-left: 6px solid var(--accent-dark); padding: 30px; margin-bottom: 30px; border-radius: 0 12px 12px 0; box-shadow: 2px 4px 10px rgba(0,0,0,0.05); }
-        .award-icon { font-size: 2rem; margin-right: 15px; vertical-align: middle; }
-        .achievement-title { font-size: 1.8rem; color: var(--text-main); margin-bottom: 10px; display: inline-block; vertical-align: middle; }
+        .achievement-card { background: var(--bg-color); border-left: 6px solid var(--accent-dark); padding: 30px; margin-bottom: 30px; border-radius: 0 12px 12px 0; }
+        .achievement-title { font-size: 1.8rem; color: var(--text-main); margin-bottom: 10px; }
         .achievement-desc { font-size: 1.15rem; color: var(--text-muted); text-align: justify; }
 
-        .skills-applied { background: var(--bg-color); border-left: 4px solid var(--accent-mid); padding: 20px; border-radius: 0 8px 8px 0; font-size: 1.1rem; color: var(--text-muted); }
-        .skills-applied span { font-weight: 700; color: var(--accent-dark); }
-
-        /* --- METHOD & MIND STYLES --- */
+        /* Method Section Specifics */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }
         .method-step { position: relative; padding-left: 40px; margin-bottom: 30px; }
         .method-step::before { content: ''; position: absolute; left: 0; top: 10px; width: 20px; height: 20px; border: 2px solid var(--accent-dark); border-radius: 50%; background: var(--bg-color); }
         .method-step::after { content: ''; position: absolute; left: 9px; top: 30px; width: 2px; height: 100%; background: var(--border-color); }
         .method-step:last-child::after { display: none; }
         .step-title { font-size: 1.5rem; font-weight: 700; color: var(--accent-dark); margin-bottom: 5px; }
-        .step-desc { font-size: 1.1rem; color: var(--text-muted); }
-
-        .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 20px; }
-        .tool-card { background: var(--bg-color); border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; text-align: center; box-shadow: 2px 2px 0 var(--border-color); }
-        .tool-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
-        .tool-name { font-weight: 700; color: var(--text-main); }
         .sticky-note { background: #fff7d1; color: #555; padding: 20px; font-family: 'Kalam', cursive; box-shadow: 2px 4px 6px rgba(0,0,0,0.1); transform: rotate(-2deg); margin-bottom: 20px; border-top: 10px solid rgba(0,0,0,0.05); }
         .sticky-note:nth-child(even) { transform: rotate(2deg); background: #e0f7fa; }
-
-        /* --- THE "NEXT CHAPTER" BUTTON (Changed to native button) --- */
-        .next-chapter-btn { display: block; width: 100%; background: var(--surface-color); color: var(--accent-dark); text-align: center; padding: 30px 20px; margin-top: 40px; margin-bottom: 80px; font-family: 'Caveat', cursive; font-size: 2.5rem; font-weight: 700; border: 2px dashed var(--accent-dark); border-radius: 12px; transition: all 0.3s ease; cursor: pointer; outline: none; }
-        .next-chapter-btn:active { background: var(--accent-dark); color: var(--bg-color); transform: translateY(4px); }
+        
+        /* Buttons */
+        .next-chapter-btn { display: block; width: 100%; background: var(--surface-color); color: var(--accent-dark); text-align: center; padding: 30px 20px; margin-top: 40px; margin-bottom: 80px; font-family: 'Caveat', cursive; font-size: 2.5rem; font-weight: 700; border: 2px dashed var(--accent-dark); border-radius: 12px; text-decoration: none; }
 
         @media (max-width: 850px) {
             .hero-wrapper { flex-direction: column-reverse; text-align: center; gap: 40px; }
             .grid-2 { grid-template-columns: 1fr; }
             .photo-frame { margin: 0 auto; width: 250px; height: 300px; }
             .hero-title { font-size: 3.5rem; }
-            .achievement-card { padding: 20px; }
-            .next-chapter-btn { font-size: 2rem; padding: 20px; }
-            .story-card { padding: 25px; }
+            .story-card, .achievement-card { padding: 25px; }
+            .next-chapter-btn { font-size: 1.8rem; padding: 20px; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <button class="brand" onclick="switchPage('journal')">Arvind B.</button>
+        <a href="#" class="brand">Arvind B.</a>
         <div class="nav-content">
             <button class="menu-btn" onclick="toggleMenu()">
                 <div class="bar"></div>
@@ -138,155 +97,95 @@
     </nav>
 
     <div class="menu-overlay" id="menuOverlay">
-        <button class="menu-link" onclick="switchPage('journal')">1. The Journal (Home)</button>
-        <button class="menu-link" onclick="switchPage('method')">2. Method & Mind</button>
-        <a href="case-studies.html" class="menu-link" style="text-align: center;">3. Case Files (Archive)</a>
-        <a href="domain.html" class="menu-link" style="text-align: center;">4. BeSci Domain & Careers</a>
-        <a href="mailto:arvindbaskar02@gmail.com" class="menu-link" style="text-align: center;">5. Contact Me</a>
-        
-        <button class="theme-toggle-sm" onclick="toggleTheme()" id="themeBtn">Switch to Dark Mode</button>
+        <a href="#" class="menu-link" onclick="toggleMenu()">1. The Journal (Home)</a>
+        <a href="#method" class="menu-link" onclick="toggleMenu()">2. Method & Mind</a>
+        <a href="case-studies.html" class="menu-link">3. Case Files (Archive)</a>
+        <a href="domain.html" class="menu-link">4. BeSci Domain & Careers</a>
+        <a href="mailto:arvindbaskar02@gmail.com" class="menu-link">5. Contact Me</a>
+        <button class="theme-toggle-sm" onclick="toggleTheme()">Switch to Dark Mode</button>
         <button class="close-menu-btn" onclick="toggleMenu()">✕ Close Menu</button>
     </div>
 
-    <div id="journal" class="page-view active">
-        <div class="container">
-            <div class="hero-wrapper">
-                <div class="hero-text">
-                    <h1 class="hero-title">Decoding the human element.</h1>
-                    <p class="hero-subtitle">
-                        I am a Behavioral Scientist. Data tells us <em>what</em> is happening; psychology tells us <em>why</em>. This is my journal of translating human behavior into actionable frameworks for agriculture, policy, and technology.
-                    </p>
-                </div>
-                <div class="photo-container">
-                    <div class="tape"></div> 
-                    <div class="photo-frame">
-                        <img src="https://i.postimg.cc/vmDdsZWz/1000040844.jpg" alt="Arvind B.">
-                    </div>
-                </div>
-            </div>
-
-            <h2 class="section-title">The Man Behind the Method</h2>
-            <div class="story-card">
-                <p class="story-narrative">
-                    I am driven by one core mission: to solve real problems that affect real people at scale. Agriculture isn't just "production"—it's a massive <strong>human decision-making ecosystem</strong> shaped by beliefs, habits, and social norms.
+    <div class="container">
+        <div class="hero-wrapper">
+            <div class="hero-text">
+                <h1 class="hero-title">Decoding the human element.</h1>
+                <p class="hero-subtitle">
+                    I am a Behavioral Scientist. Data tells us <em>what</em> is happening; psychology tells us <em>why</em>. This is my journal of translating human behavior into actionable frameworks for agriculture, policy, and technology.
                 </p>
-                <div class="skills-applied">
-                    <strong>My Vision:</strong> To work alongside government and agricultural institutions to design research-led solutions that empower farmers and strengthen rural ecosystems.
+            </div>
+            <div class="photo-container">
+                <div class="tape"></div> 
+                <div class="photo-frame">
+                    <img src="https://i.postimg.cc/vmDdsZWz/1000040844.jpg" alt="Arvind B.">
                 </div>
             </div>
-
-            <h2 class="section-title">Strategic Design</h2>
-            <div class="story-card">
-                <span class="story-date">April 2025</span>
-                <h3 class="story-title">KriShiKsha: Demand-Led Farming</h3>
-                <p class="story-narrative">
-                    Most farmers plant seeds and <em>hope</em> the price is good. That's gambling, not business. I designed KriShiKsha to tell farmers what the market wants <em>before</em> they sow, using simple "Red/Green" signals.
-                </p>
-                <div class="skills-applied">
-                    <strong>Skills Applied:</strong> <span>Strategic Thinking</span>, <span>Data Visualization</span>.
-                </div>
-            </div>
-
-            <h2 class="section-title" style="margin-top: 40px;">Milestones & Recognition</h2>
-            <div class="story-card">
-                
-                <div class="achievement-card">
-                    <div>
-                        <span class="award-icon">🏛️</span>
-                        <h3 class="achievement-title">State Finalist – TN-EDII Startup Competition</h3>
-                    </div>
-                    <p class="achievement-desc">
-                        <em>Cook2You</em> was born out of a simple desire to help exhausted urban workers eat better by reducing the friction of meal prep. Being recognized as a state finalist by the Tamil Nadu Government and the Entrepreneurship Development and Innovation Institute (TN-EDII) was an incredibly humbling experience. It validated not just the business model, but our core behavioral hypothesis: when you make nutrition the path of least resistance, people will choose it. This platform taught me how large public institutions evaluate grassroots impact and scalability.
-                    </p>
-                </div>
-
-                <div class="achievement-card">
-                    <div>
-                        <span class="award-icon">🦈</span>
-                        <h3 class="achievement-title">Winner – Shark Tank, Indian Maritime University</h3>
-                    </div>
-                    <p class="achievement-desc">
-                        Pitching here was a masterclass in communicating complex behavioral solutions simply. Winning this event was a tremendous team effort and a reminder that when you genuinely focus on reducing human fatigue, investors and users alike immediately connect with the vision.
-                    </p>
-                </div>
-
-                <div class="achievement-card">
-                    <div>
-                        <span class="award-icon">💡</span>
-                        <h3 class="achievement-title">Top Startup Recognition – IIT Kharagpur</h3>
-                    </div>
-                    <p class="achievement-desc">
-                        We had the privilege of presenting our model among some of the brightest technical minds in the country. Being highlighted here reinforced a profound lesson for me: the most advanced technology is useless if it ignores human psychology. It sharpened my approach to bridging tech and human behavior.
-                    </p>
-                </div>
-            </div>
-            
-            <button onclick="switchPage('method')" class="next-chapter-btn">Next Chapter: Method & Mind ➜</button>
-            
         </div>
-    </div>
 
-    <div id="method" class="page-view">
-        <div class="container">
+        <h2 class="section-title">The Man Behind the Method</h2>
+        <div class="story-card">
+            <p class="story-narrative">I am driven by one core mission: to solve real problems that affect real people at scale. Agriculture isn't just "production"—it's a massive <strong>human decision-making ecosystem</strong> shaped by beliefs, habits, and social norms.</p>
+        </div>
+
+        <h2 class="section-title">Strategic Design</h2>
+        <div class="story-card">
+            <h3 class="story-title">KriShiKsha: Demand-Led Farming</h3>
+            <p class="story-narrative">Most farmers plant seeds and <em>hope</em> the price is good. That's gambling, not business. I designed KriShiKsha to tell farmers what the market wants <em>before</em> they sow, using simple "Red/Green" signals.</p>
+        </div>
+
+        <h2 class="section-title">Milestones & Recognition</h2>
+        <div class="story-card">
+            <div class="achievement-card">
+                <h3 class="achievement-title">🏛️ State Finalist – TN-EDII Startup Competition</h3>
+                <p class="achievement-desc"><em>Cook2You</em> was born out of a simple desire to help exhausted urban workers eat better by reducing the friction of meal prep. Being recognized as a state finalist validated our core behavioral hypothesis: when you make nutrition the path of least resistance, people will choose it.</p>
+            </div>
+            <div class="achievement-card">
+                <h3 class="achievement-title">🦈 Winner – Shark Tank, Indian Maritime University</h3>
+                <p class="achievement-desc">Pitching here was a masterclass in communicating complex behavioral solutions simply. Winning this event was a tremendous team effort.</p>
+            </div>
+            <div class="achievement-card">
+                <h3 class="achievement-title">💡 Top Startup Recognition – IIT Kharagpur</h3>
+                <p class="achievement-desc">We had the privilege of presenting our model among some of the brightest technical minds in the country. It reinforced a profound lesson: the most advanced technology is useless if it ignores human psychology.</p>
+            </div>
+        </div>
+        
+        <a href="#method" class="next-chapter-btn">Next Chapter: Method & Mind ➜</a>
+
+        <div id="method" style="padding-top: 50px;">
             <h1 class="hero-title">The Lab.</h1>
-            <p class="hero-subtitle" style="margin-bottom: 60px;">
-                Behavioral Science isn't magic; it's a rigorous process. Here is how I break down problems, the tools I use, and the mental models that guide my thinking.
-            </p>
+            <p class="hero-subtitle" style="margin-bottom: 60px;">Behavioral Science isn't magic; it's a rigorous process. Here is how I break down problems, the tools I use, and the mental models that guide my thinking.</p>
             
             <div class="grid-2">
                 <div>
                     <h2 class="section-title">My Framework</h2>
                     <div style="background: var(--surface-color); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color);">
-                        <div class="method-step">
-                            <div class="step-title">1. Diagnosis</div>
-                            <div class="step-desc">Identifying the "Behavioral Gap". Why are people acting differently than the optimal model suggests?</div>
-                        </div>
-                        <div class="method-step">
-                            <div class="step-title">2. Hypothesis</div>
-                            <div class="step-desc">Formulating a psychological theory. Is it a lack of ability? A lack of motivation? Or a missing trigger?</div>
-                        </div>
-                        <div class="method-step">
-                            <div class="step-title">3. Intervention Design</div>
-                            <div class="step-desc">Designing the "Nudge" or "Choice Architecture". This is where UX and policy writing happen.</div>
-                        </div>
-                        <div class="method-step">
-                            <div class="step-title">4. Impact Measurement</div>
-                            <div class="step-desc">Using RCTs (Randomized Control Trials) or A/B testing to validate if the behavior actually changed.</div>
-                        </div>
+                        <div class="method-step"><div class="step-title">1. Diagnosis</div></div>
+                        <div class="method-step"><div class="step-title">2. Hypothesis</div></div>
+                        <div class="method-step"><div class="step-title">3. Intervention Design</div></div>
+                        <div class="method-step"><div class="step-title">4. Impact Measurement</div></div>
                     </div>
                 </div>
 
                 <div>
                     <h2 class="section-title">Mental Models</h2>
-                    <div class="sticky-note">
-                        <strong>The Cobweb Theorem:</strong><br>Farmers base future production on past prices, causing cycles of volatility. We must break this loop with predictive data.
-                    </div>
-                    <div class="sticky-note">
-                        <strong>Hyperbolic Discounting:</strong><br>Humans prefer smaller, immediate rewards over larger, later ones. Sustainable farming requires bridging this gap.
-                    </div>
-                    <div class="sticky-note">
-                        <strong>Narrative Fallacy:</strong><br>We trust stories more than statistics. To change policy adoption, we must change the story, not just the data.
-                    </div>
+                    <div class="sticky-note"><strong>The Cobweb Theorem:</strong><br>Farmers base future production on past prices, causing cycles of volatility. We must break this loop with predictive data.</div>
+                    <div class="sticky-note"><strong>Hyperbolic Discounting:</strong><br>Humans prefer smaller, immediate rewards over larger, later ones. Sustainable farming requires bridging this gap.</div>
+                    <div class="sticky-note"><strong>Narrative Fallacy:</strong><br>We trust stories more than statistics. To change policy adoption, we must change the story, not just the data.</div>
                 </div>
             </div>
-
-            <h2 class="section-title">The Toolkit</h2>
-            <div class="tool-grid" style="margin-bottom: 50px;">
-                <div class="tool-card"><span class="tool-icon">📊</span><div class="tool-name">SPSS & R</div><div style="font-size:0.8rem; color:var(--text-muted)">Statistical Analysis</div></div>
-                <div class="tool-card"><span class="tool-icon">📈</span><div class="tool-name">Looker Studio</div><div style="font-size:0.8rem; color:var(--text-muted)">Data Visualization</div></div>
-                <div class="tool-card"><span class="tool-icon">📝</span><div class="tool-name">Survey Design</div><div style="font-size:0.8rem; color:var(--text-muted)">Qualtrics / Google</div></div>
-                <div class="tool-card"><span class="tool-icon">🧠</span><div class="tool-name">Scale Creation</div><div style="font-size:0.8rem; color:var(--text-muted)">Assessment Tools</div></div>
-            </div>
             
-            <a href="case-studies.html" style="text-decoration: none;">
-                <button class="next-chapter-btn">Next Chapter: Explore Case Files ➜</button>
-            </a>
-            
+            <a href="case-studies.html" class="next-chapter-btn">Next Chapter: Explore Case Files ➜</a>
         </div>
     </div>
 
     <script>
         function toggleTheme() {
             const htmlEl = document.documentElement;
-            const btn = document.getElementById('themeBtn');
-            if (htm
+            htmlEl.setAttribute('data-theme', htmlEl.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+        }
+        function toggleMenu() {
+            document.getElementById('menuOverlay').classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
