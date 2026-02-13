@@ -147,6 +147,24 @@
         .skills-applied { background: var(--bg-color); border-left: 4px solid var(--accent-mid); padding: 20px; border-radius: 0 8px 8px 0; font-size: 1.1rem; color: var(--text-muted); }
         .skills-applied span { font-weight: 700; color: var(--accent-dark); }
 
+        /* --- METHOD & MIND STYLES --- */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }
+        
+        .method-step { position: relative; padding-left: 40px; margin-bottom: 30px; }
+        .method-step::before { content: ''; position: absolute; left: 0; top: 10px; width: 20px; height: 20px; border: 2px solid var(--accent-dark); border-radius: 50%; background: var(--bg-color); }
+        .method-step::after { content: ''; position: absolute; left: 9px; top: 30px; width: 2px; height: 100%; background: var(--border-color); }
+        .method-step:last-child::after { display: none; }
+        .step-title { font-size: 1.5rem; font-weight: 700; color: var(--accent-dark); margin-bottom: 5px; }
+        .step-desc { font-size: 1.1rem; color: var(--text-muted); }
+
+        .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 20px; }
+        .tool-card { background: var(--bg-color); border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; text-align: center; box-shadow: 2px 2px 0 var(--border-color); }
+        .tool-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+        .tool-name { font-weight: 700; color: var(--text-main); }
+
+        .sticky-note { background: #fff7d1; color: #555; padding: 20px; font-family: 'Kalam', cursive; box-shadow: 2px 4px 6px rgba(0,0,0,0.1); transform: rotate(-2deg); margin-bottom: 20px; border-top: 10px solid rgba(0,0,0,0.05); }
+        .sticky-note:nth-child(even) { transform: rotate(2deg); background: #e0f7fa; }
+
         /* Animation Classes */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s; }
         .reveal.active { opacity: 1; transform: translateY(0); }
@@ -175,7 +193,9 @@
         <a href="#" class="menu-link" onclick="navigate('journal')">1. The Journal (Home)</a>
         <a href="#" class="menu-link" onclick="navigate('method')">2. Method & Mind</a>
         <a href="case-studies.html" class="menu-link">3. Case Files (Archive)</a>
-        <a href="simulation.html" class="menu-link">4. Behavioral Lab (AI Sim)</a>
+        
+        <a href="domain.html" class="menu-link">4. BeSci Domain & Careers</a>
+        
         <a href="mailto:arvindbaskar02@gmail.com" class="menu-link">5. Contact Me</a>
         <button class="theme-toggle-sm" onclick="toggleTheme()" id="themeBtn">Switch to Dark Mode</button>
         <div style="margin-top: 30px; font-size: 2rem; cursor: pointer;" onclick="toggleMenu()">✕ Close Menu</div>
@@ -306,7 +326,7 @@
             </div>
             
             <div style="text-align: center; margin-top: 20px; margin-bottom: 80px;">
-                <a href="simulation.html" style="font-family: 'Caveat', cursive; font-size: 2rem; color: var(--accent-dark); text-decoration: none; border-bottom: 2px dashed var(--accent-dark);">Try the AI Behavioral Simulator ➜</a>
+                <a href="domain.html" style="font-family: 'Caveat', cursive; font-size: 2rem; color: var(--accent-dark); text-decoration: none; border-bottom: 2px dashed var(--accent-dark);">Explore BeSci Domain & Careers ➜</a>
             </div>
             
         </div>
