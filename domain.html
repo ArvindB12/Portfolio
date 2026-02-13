@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arvind B. | The BeSci Domain</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Palette */
+            --bg-color: #F6FEDB;
+            --surface-color: #E6D3A3;
+            --accent-light: #D8D174;
+            --accent-mid: #B6C454;
+            --accent-dark: #91972A;
+            --text-main: #2a2e1d;
+            --text-muted: #545943;
+            --border-color: rgba(145, 151, 42, 0.3);
+            --shadow: 0 10px 30px rgba(145, 151, 42, 0.15);
+        }
+
+        [data-theme="dark"] {
+            /* Dark Theme */
+            --bg-color: #161811;
+            --surface-color: #24271c;
+            --accent-light: #91972A;
+            --accent-mid: #B6C454;
+            --accent-dark: #D8D174;
+            --text-main: #F6FEDB;
+            --text-muted: #E6D3A3;
+            --border-color: rgba(246, 254, 219, 0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.4s, color 0.4s; }
+        body { font-family: 'Kalam', cursive; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+        h1, h2, h3, h4 { font-family: 'Caveat', cursive; font-weight: 700; line-height: 1.1; }
+
+        /* --- NAVIGATION --- */
+        nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: linear-gradient(var(--bg-color) 80%, transparent); pointer-events: none; }
+        .nav-content { pointer-events: auto; display: flex; align-items: center; gap: 20px; }
+        .brand { pointer-events: auto; font-family: 'Caveat', cursive; font-size: 2rem; color: var(--accent-dark); text-decoration: none; font-weight: 700; }
+
+        .menu-btn { background: var(--surface-color); border: 2px solid var(--accent-dark); width: 50px; height: 50px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; cursor: pointer; box-shadow: 4px 4px 0 var(--accent-mid); pointer-events: auto; }
+        .menu-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--accent-mid); }
+        .bar { width: 24px; height: 2px; background: var(--text-main); border-radius: 2px; transition: 0.3s; }
+
+        /* --- MENU OVERLAY --- */
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 900; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transform: translateY(-20px); }
+        .menu-overlay.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .menu-link { font-family: 'Caveat', cursive; font-size: 2.5rem; color: var(--text-main); text-decoration: none; margin: 15px 0; opacity: 0; transform: translateY(20px); transition: 0.5s; }
+        .menu-overlay.open .menu-link { opacity: 1; transform: translateY(0); }
+        .menu-overlay.open .menu-link:nth-child(1) { transition-delay: 0.1s; }
+        .menu-overlay.open .menu-link:nth-child(2) { transition-delay: 0.15s; }
+        .menu-overlay.open .menu-link:nth-child(3) { transition-delay: 0.2s; }
+        .menu-overlay.open .menu-link:nth-child(4) { transition-delay: 0.25s; }
+        .menu-overlay.open .menu-link:nth-child(5) { transition-delay: 0.3s; }
+        .theme-toggle-sm { margin-top: 30px; padding: 10px 20px; border-radius: 30px; border: 2px solid var(--accent-dark); background: transparent; color: var(--text-main); font-family: 'Kalam', cursive; font-weight: 700; cursor: pointer; }
+
+        /* --- LAYOUT --- */
+        .container { max-width: 1000px; margin: 0 auto; width: 100%; padding: 120px 5% 50px; }
+        .section-title { font-size: 3rem; color: var(--accent-mid); margin-bottom: 30px; border-bottom: 2px dashed var(--border-color); padding-bottom: 10px; display: inline-block; }
+        .hero-title { font-size: clamp(3rem, 6vw, 4.5rem); color: var(--accent-dark); margin-bottom: 20px; text-align: center; }
+        .hero-subtitle { font-size: clamp(1.2rem, 2.5vw, 1.5rem); color: var(--text-muted); text-align: center; margin-bottom: 60px; max-width: 800px; margin-left: auto; margin-right: auto; }
+
+        /* --- CARDS & TEXT --- */
+        .story-card { background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 40px; margin-bottom: 40px; box-shadow: var(--shadow); position: relative; }
+        .story-narrative { font-size: 1.25rem; color: var(--text-main); margin-bottom: 20px; text-align: justify; }
+        
+        .highlight-quote { border-left: 4px solid var(--accent-dark); padding-left: 20px; font-size: 1.4rem; font-style: italic; color: var(--accent-dark); margin: 30px 0; }
+
+        /* --- GRID LAYOUTS --- */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 50px; }
+        .pathway-card { background: var(--bg-color); border: 1px solid var(--border-color); padding: 25px; border-radius: 12px; box-shadow: 2px 4px 10px rgba(0,0,0,0.05); }
+        .pathway-title { font-family: 'Caveat', cursive; font-size: 2rem; color: var(--accent-dark); margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; }
+        .pathway-desc { font-size: 1.1rem; color: var(--text-muted); }
+
+        /* --- THE TRANSITION ENGINE (INTERACTIVE TOOL) --- */
+        .interactive-tool { background: var(--surface-color); padding: 40px; border-radius: 16px; border: 2px dashed var(--accent-dark); box-shadow: var(--shadow); margin-top: 40px; }
+        .tool-header { text-align: center; margin-bottom: 30px; }
+        .tool-label { font-weight: 700; font-size: 1.3rem; color: var(--accent-dark); margin-bottom: 15px; display: block; text-align: center; }
+        
+        .domain-select {
+            width: 100%; max-width: 500px; margin: 0 auto; display: block; padding: 15px; border-radius: 8px; border: 2px solid var(--accent-dark);
+            background: var(--bg-color); font-family: 'Kalam', cursive; font-size: 1.2rem; color: var(--text-main);
+            cursor: pointer; appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2391972A%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat; background-position: right 15px top 50%; background-size: 15px auto;
+        }
+
+        .result-box {
+            background: var(--bg-color); padding: 30px; border-radius: 12px; margin-top: 30px;
+            display: none; animation: slideUp 0.5s ease; border-left: 6px solid var(--accent-mid);
+        }
+        
+        .result-section { margin-bottom: 25px; }
+        .result-title { font-family: 'Caveat', cursive; font-size: 1.8rem; color: var(--accent-dark); margin-bottom: 5px; }
+        .result-text { font-size: 1.15rem; color: var(--text-main); line-height: 1.5; }
+        
+        .resource-tag { display: inline-block; background: var(--surface-color); border: 1px solid var(--border-color); padding: 5px 15px; border-radius: 20px; font-weight: 700; font-size: 1rem; margin-right: 10px; margin-top: 10px; color: var(--accent-dark); }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Animation */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .story-card { padding: 25px; }
+            .interactive-tool { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="brand">Arvind B.</a>
+        <div class="nav-content">
+            <div class="menu-btn" onclick="toggleMenu()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="menu-overlay" id="menuOverlay">
+        <a href="index.html" class="menu-link">1. The Journal (Home)</a>
+        <a href="index.html#method" class="menu-link">2. Method & Mind</a>
+        <a href="case-studies.html" class="menu-link">3. Case Files (Archive)</a>
+        <a href="#" class="menu-link" onclick="toggleMenu()">4. BeSci Domain & Careers</a>
+        <a href="mailto:arvindbaskar02@gmail.com" class="menu-link">5. Contact Me</a>
+        <button class="theme-toggle-sm" onclick="toggleTheme()" id="themeBtn">Switch to Dark Mode</button>
+        <div style="margin-top: 30px; font-size: 2rem; cursor: pointer;" onclick="toggleMenu()">✕ Close Menu</div>
+    </div>
+
+    <div class="container">
+        
+        <h1 class="hero-title reveal">The Architecture of Choice.</h1>
+        <p class="hero-subtitle reveal">
+            Behavioral Science (BeSci) isn't just an academic theory; it is the applied science of human decision-making. Here is a look at the landscape, the policy impact in India, and how you can map your career into this domain.
+        </p>
+
+        <h2 class="section-title reveal" style="margin-top: 20px;">Public Policy & The Indian Landscape</h2>
+        <div class="story-card reveal">
+            <p class="story-narrative">
+                For decades, traditional economics assumed humans were perfectly rational calculators. Behavioral science argues the opposite: we are predictably irrational. In the context of a massive, diverse population like India, understanding this irrationality is the key to effective governance.
+            </p>
+            
+            <div class="highlight-quote">
+                "A policy is only as good as the human behavior it inspires."
+            </div>
+
+            <p class="story-narrative">
+                <strong>The NITI Aayog Nudge Unit:</strong> India has actively embraced behavioral economics at the highest levels. The establishment of the Behavioural Insights Unit inside NITI Aayog marked a monumental shift from "mandates" to "nudges." 
+            </p>
+            <p class="story-narrative">
+                <strong>Real-World Impact:</strong> Consider the <em>Swachh Bharat Abhiyan</em>. It wasn't just an infrastructure project to build toilets; it was a massive behavioral campaign utilizing "Social Proof" and community messaging to change deeply ingrained sanitation habits. Similarly, the <em>GiveItUp</em> campaign successfully nudged millions of affluent citizens to voluntarily surrender their LPG subsidies by framing it as a social and moral contribution, rather than a tax.
+            </p>
+            <p class="story-narrative">
+                As the country grapples with complex issues like agricultural distress, climate adaptation, and tax compliance, the demand for professionals who can bridge the gap between policy intent and ground-level human behavior is skyrocketing.
+            </p>
+        </div>
+
+        <h2 class="section-title reveal">Career Pathways in BeSci</h2>
+        <p class="story-narrative reveal">Behavioral Science is a horizontal skill. It doesn't restrict you to one industry; it acts as a multiplier across various domains. Here are the primary pathways:</p>
+
+        <div class="grid-2 reveal">
+            <div class="pathway-card">
+                <h3 class="pathway-title">1. Public Policy Advisor</h3>
+                <p class="pathway-desc">Working with government bodies, NGOs, or think tanks (like J-PAL or NITI Aayog) to design interventions that increase policy compliance, public health outcomes, and sustainable agriculture.</p>
+            </div>
+            
+            <div class="pathway-card">
+                <h3 class="pathway-title">2. Behavioral UX / Product Designer</h3>
+                <p class="pathway-desc">Working in tech to design digital choice architectures. Instead of just making an app look good, you ensure the user interface reduces cognitive friction and nudges users toward positive actions (e.g., saving money, learning).</p>
+            </div>
+
+            <div class="pathway-card">
+                <h3 class="pathway-title">3. Org Behavior / HR Strategy</h3>
+                <p class="pathway-desc">Applying psychology inside companies to improve employee engagement, optimize remote work culture, reduce burnout, and design better incentive structures.</p>
+            </div>
+
+            <div class="pathway-card">
+                <h3 class="pathway-title">4. Applied Researcher</h3>
+                <p class="pathway-desc">Working in behavioral labs or consulting firms (like Ideas42 or Behavioral Dynamics) conducting Randomized Control Trials (RCTs) to test which interventions actually change human habits.</p>
+            </div>
+        </div>
+
+        <h2 class="section-title reveal">The Transition Engine</h2>
+        <p class="story-narrative reveal" style="text-align: center;">Curious how your current skills translate into Behavioral Science? Select your domain below for a personalized integration guide.</p>
+
+        <div class="interactive-tool reveal">
+            <div class="tool-header">
+                <label class="tool-label">What is your current or target domain?</label>
+                <select id="domainSelect" class="domain-select" onchange="generateGuide()">
+                    <option value="" disabled selected>-- Select Your Field --</option>
+                    <option value="hr">Human Resources / Management</option>
+                    <option value="marketing">Marketing & Communications</option>
+                    <option value="ux">UI/UX & Product Design</option>
+                    <option value="data">Data Science & Analytics</option>
+                    <option value="finance">Economics & Finance</option>
+                </select>
+            </div>
+
+            <div id="guideResult" class="result-box">
+                </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- THEME TOGGLE ---
+        function toggleTheme() {
+            const htmlEl = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            if (htmlEl.getAttribute('data-theme') === 'light') {
+                htmlEl.setAttribute('data-theme', 'dark');
+                btn.innerText = 'Switch to Light Mode';
+            } else {
+                htmlEl.setAttribute('data-theme', 'light');
+                btn.innerText = 'Switch to Dark Mode';
+            }
+        }
+
+        // --- MENU LOGIC ---
+        function toggleMenu() {
+            document.getElementById('menuOverlay').classList.toggle('open');
+        }
+
+        // --- SCROLL REVEAL ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            const revealOnScroll = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+
+            reveals.forEach(reveal => revealOnScroll.observe(reveal));
+            setTimeout(() => {
+                reveals.forEach(reveal => {
+                    if (reveal.getBoundingClientRect().top < window.innerHeight) reveal.classList.add('active');
+                });
+            }, 100);
+        });
+
+        // --- TRANSITION ENGINE LOGIC ---
+        const guideData = {
+            hr: {
+                advantage: "You already understand people operations, organizational friction, and incentive structures.",
+                apply: "Shift from 'enforcing policies' to 'designing environments'. Use BeSci to rewrite onboarding emails to reduce anxiety, or restructure performance reviews to mitigate 'Recency Bias'. Focus on Choice Architecture to nudge employees toward better health or retirement savings.",
+                books: ["Work Rules! (Laszlo Bock)", "Nudge (Thaler & Sunstein)", "Drive (Daniel Pink)"]
+            },
+            marketing: {
+                advantage: "You are already a behavioral architect, manipulating attention and desire.",
+                apply: "Transition from 'persuasion' to 'ethical nudging'. Apply frameworks like the 'Fogg Behavior Model' (Motivation + Ability + Prompt). Learn to run rigorous A/B tests not just for click-through rates, but to understand the underlying psychological triggers (e.g., Scarcity vs. Social Proof).",
+                books: ["Thinking, Fast and Slow (Daniel Kahneman)", "Predictably Irrational (Dan Ariely)", "Influence (Robert Cialdini)"]
+            },
+            ux: {
+                advantage: "You control the digital environment where decisions are made.",
+                apply: "UX is applied BeSci. Start identifying 'Sludge' (unnecessary friction that prevents users from doing what they want). Implement principles like 'Default Bias' for complex settings, and 'Chunking' to prevent cognitive overload in long forms. Avoid dark patterns.",
+                books: ["Designing for Behavior Change (Stephen Wendel)", "Engaged (Amy Bucher)", "Hooked (Nir Eyal)"]
+            },
+            data: {
+                advantage: "You have the quantitative rigor needed to measure if a psychological intervention actually works.",
+                apply: "Behavioral Science is useless without measurement. Your transition involves moving from 'What is the data saying?' to 'Why did human psychology create this data?' Learn how to design Randomized Control Trials (RCTs) to test behavioral hypotheses in the real world.",
+                books: ["The Catalyst (Jonah Berger)", "Everybody Lies (Seth Stephens-Davidowitz)", "Mixed Methods Research"]
+            },
+            finance: {
+                advantage: "You understand the systemic mechanisms of value, risk, and utility.",
+                apply: "Traditional economics assumes humans are rational. You can bridge the gap by applying 'Behavioral Economics'. Focus on how 'Hyperbolic Discounting' affects loan repayments, or how 'Mental Accounting' changes the way rural farmers spend their subsidies.",
+                books: ["Misbehaving (Richard Thaler)", "Scarcity (Mullainathan & Shafir)", "The Psychology of Money (Morgan Housel)"]
+            }
+        };
+
+        function generateGuide() {
+            const selection = document.getElementById('domainSelect').value;
+            const resultBox = document.getElementById('guideResult');
+            
+            if (!selection) return;
+
+            const data = guideData[selection];
+            
+            // Build Book Tags
+            let booksHtml = '';
+            data.books.forEach(book => {
+                booksHtml += `<span class="resource-tag">📚 ${book}</span>`;
+            });
+
+            const html = `
+                <div class="result-section">
+                    <h4 class="result-title">Your Secret Weapon</h4>
+                    <p class="result-text">${data.advantage}</p>
+                </div>
+                <div class="result-section">
+                    <h4 class="result-title">How to Apply BeSci Today</h4>
+                    <p class="result-text"
