@@ -42,19 +42,18 @@
         body { font-family: 'Kalam', cursive; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
         h1, h2, h3, h4 { font-family: 'Caveat', cursive; font-weight: 700; line-height: 1.1; }
 
-        /* --- NAVIGATION --- */
-        nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: linear-gradient(var(--bg-color) 80%, transparent); pointer-events: none; }
-        .nav-content { pointer-events: auto; display: flex; align-items: center; gap: 20px; }
-        .brand { pointer-events: auto; font-family: 'Caveat', cursive; font-size: 2rem; color: var(--accent-dark); text-decoration: none; font-weight: 700; }
+        /* --- NAVIGATION (FIXED FOR MOBILE TOUCH) --- */
+        nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: linear-gradient(var(--bg-color) 85%, transparent); }
+        .nav-content { display: flex; align-items: center; gap: 20px; }
+        .brand { font-family: 'Caveat', cursive; font-size: 2rem; color: var(--accent-dark); text-decoration: none; font-weight: 700; }
 
-        .menu-btn { background: var(--surface-color); border: 2px solid var(--accent-dark); width: 50px; height: 50px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; cursor: pointer; box-shadow: 4px 4px 0 var(--accent-mid); pointer-events: auto; }
+        .menu-btn { background: var(--surface-color); border: 2px solid var(--accent-dark); width: 50px; height: 50px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; cursor: pointer; box-shadow: 4px 4px 0 var(--accent-mid); }
         .menu-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--accent-mid); }
         .bar { width: 24px; height: 2px; background: var(--text-main); border-radius: 2px; transition: 0.3s; }
 
         /* --- MENU OVERLAY --- */
-        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 900; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transform: translateY(-20px); transition: all 0.4s; }
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transform: translateY(-20px); transition: all 0.4s ease; }
         .menu-overlay.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        
         .menu-link { font-family: 'Caveat', cursive; font-size: 2.5rem; color: var(--text-main); text-decoration: none; margin: 15px 0; opacity: 0; transform: translateY(20px); transition: 0.5s; }
         .menu-overlay.open .menu-link { opacity: 1; transform: translateY(0); }
         .menu-overlay.open .menu-link:nth-child(1) { transition-delay: 0.1s; }
@@ -67,7 +66,6 @@
         /* --- PAGE STRUCTURE --- */
         .page-view { display: none; padding-top: 100px; min-height: 100vh; animation: fadeIn 0.5s ease; }
         .page-view.active { display: block; }
-        
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .container { max-width: 1000px; margin: 0 auto; width: 100%; padding: 0 5%; }
@@ -89,7 +87,7 @@
         .story-card { background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 40px; margin-bottom: 40px; box-shadow: var(--shadow); }
         .story-date { font-family: 'Caveat', cursive; font-size: 1.5rem; color: var(--accent-dark); margin-bottom: 10px; display: block; }
         .story-title { font-size: 2.2rem; margin-bottom: 15px; }
-        .story-narrative { font-size: 1.25rem; color: var(--text-main); margin-bottom: 25px; }
+        .story-narrative { font-size: 1.25rem; color: var(--text-main); margin-bottom: 25px; text-align: justify; }
         
         .achievement-card { background: var(--bg-color); border-left: 6px solid var(--accent-dark); padding: 30px; margin-bottom: 30px; border-radius: 0 12px 12px 0; box-shadow: 2px 4px 10px rgba(0,0,0,0.05); }
         .award-icon { font-size: 2rem; margin-right: 15px; vertical-align: middle; }
@@ -125,14 +123,15 @@
             .photo-frame { margin: 0 auto; width: 250px; height: 300px; }
             .hero-title { font-size: 3.5rem; }
             .achievement-card { padding: 20px; }
-            .next-chapter-btn { font-size: 2rem; padding: 20px; }
+            .next-chapter-btn { font-size: 1.8rem; padding: 20px; }
+            .story-card { padding: 25px; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#" class="brand" onclick="navigate('journal')">Arvind B.</a>
+        <a href="javascript:void(0);" class="brand" onclick="navigate('journal')">Arvind B.</a>
         <div class="nav-content">
             <div class="menu-btn" onclick="toggleMenu()">
                 <div class="bar"></div>
@@ -142,13 +141,13 @@
     </nav>
 
     <div class="menu-overlay" id="menuOverlay">
-        <a href="#" class="menu-link" onclick="navigate('journal')">1. The Journal (Home)</a>
-        <a href="#" class="menu-link" onclick="navigate('method')">2. Method & Mind</a>
+        <a href="javascript:void(0);" class="menu-link" onclick="navigate('journal')">1. The Journal (Home)</a>
+        <a href="javascript:void(0);" class="menu-link" onclick="navigate('method')">2. Method & Mind</a>
         <a href="case-studies.html" class="menu-link">3. Case Files (Archive)</a>
         <a href="domain.html" class="menu-link">4. BeSci Domain & Careers</a>
         <a href="mailto:arvindbaskar02@gmail.com" class="menu-link">5. Contact Me</a>
         <button class="theme-toggle-sm" onclick="toggleTheme()" id="themeBtn">Switch to Dark Mode</button>
-        <div style="margin-top: 30px; font-size: 2rem; cursor: pointer;" onclick="toggleMenu()">✕ Close Menu</div>
+        <div style="margin-top: 30px; font-size: 2rem; cursor: pointer; color: var(--accent-dark); font-weight: bold;" onclick="toggleMenu()">✕ Close Menu</div>
     </div>
 
     <div id="journal" class="page-view active">
@@ -224,7 +223,7 @@
                 </div>
             </div>
             
-            <a href="#" onclick="navigate('method')" class="next-chapter-btn">Next Chapter: Method & Mind ➜</a>
+            <a href="javascript:void(0);" onclick="navigate('method')" class="next-chapter-btn">Next Chapter: Method & Mind ➜</a>
             
         </div>
     </div>
@@ -288,5 +287,4 @@
 
     <script>
         function toggleTheme() {
-            const htmlEl = document.documentElement;
-            const btn = document.getElementById('themeBtn');
+    
